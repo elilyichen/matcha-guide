@@ -1,0 +1,1625 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>抹茶學習指南 — 一杯茶的千年故事</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;600;900&family=Shippori+Mincho:wght@400;700&family=Montserrat:wght@300;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --matcha-deep: #2d4a2f;
+  --matcha-mid: #4a7c59;
+  --matcha-bright: #7ab648;
+  --matcha-light: #b8d98d;
+  --matcha-pale: #e8f0d8;
+  --cream: #f5f0e8;
+  --earth: #8b6f47;
+  --earth-light: #c4a882;
+  --ink: #1a1a18;
+  --gold: #c9a84c;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+body { background:var(--cream); color:var(--ink); font-family:'Noto Serif TC',serif; overflow-x:hidden; }
+
+/* ═══════════════════════════════
+   HERO — 茶園照片封面
+═══════════════════════════════ */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  line-height: 0;
+}
+.hero-bg svg {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+/* kenBurns removed */
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(5,15,7,0.45) 0%,
+    rgba(8,20,10,0.22) 50%,
+    rgba(5,15,7,0.18) 100%
+  );
+}
+.hero-content {
+  position: relative;
+  z-index: 2;
+  padding: 0 80px;
+  max-width: 760px;
+}
+.hero-eyebrow {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 6px;
+  color: var(--matcha-bright);
+  text-transform: uppercase;
+  margin-bottom: 28px;
+  opacity: 0;
+  animation: fadeUp 0.8s 0.3s forwards;
+}
+.hero-title {
+  font-family: 'Shippori Mincho', serif;
+  font-size: clamp(72px,10vw,130px);
+  line-height: 0.9;
+  color: #fff;
+  letter-spacing: -3px;
+  margin-bottom: 12px;
+  opacity: 0;
+  animation: fadeUp 0.9s 0.5s forwards;
+}
+.hero-title-en {
+  font-family: 'Montserrat', sans-serif;
+  font-size: clamp(13px,2vw,20px);
+  font-weight: 300;
+  color: var(--matcha-light);
+  letter-spacing: 10px;
+  margin-bottom: 36px;
+  opacity: 0;
+  animation: fadeUp 0.8s 0.7s forwards;
+}
+.hero-divider {
+  width: 60px;
+  height: 1px;
+  background: var(--matcha-bright);
+  margin-bottom: 28px;
+  opacity: 0;
+  animation: fadeUp 0.8s 0.9s forwards;
+}
+.hero-desc {
+  font-size: 15px;
+  line-height: 2.1;
+  color: rgba(255,255,255,0.72);
+  max-width: 480px;
+  margin-bottom: 52px;
+  opacity: 0;
+  animation: fadeUp 0.8s 1.0s forwards;
+}
+.hero-nav {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  opacity: 0;
+  animation: fadeUp 0.8s 1.2s forwards;
+}
+.hero-nav a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 22px;
+  border: 1px solid rgba(184,217,141,0.45);
+  color: var(--matcha-light);
+  text-decoration: none;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  transition: all 0.3s;
+  border-radius: 2px;
+}
+.hero-nav a:hover {
+  background: rgba(184,217,141,0.15);
+  border-color: var(--matcha-bright);
+  color: #fff;
+}
+.hero-scroll {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  color: rgba(255,255,255,0.4);
+  font-family: 'Montserrat',sans-serif;
+  font-size: 9px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  animation: fadeIn 1s 2s both;
+}
+.scroll-line {
+  width: 1px;
+  height: 48px;
+  background: linear-gradient(to bottom, rgba(184,217,141,0.6), transparent);
+  animation: scrollPulse 2s ease-in-out infinite;
+}
+@keyframes scrollPulse {
+  0%,100% { opacity:0.3; transform:scaleY(1); }
+  50%      { opacity:1;   transform:scaleY(1.2); transform-origin:top; }
+}
+
+/* ═══════════════════════════════
+   STICKY NAV
+═══════════════════════════════ */
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 200;
+  background: var(--matcha-deep);
+  border-bottom: 1px solid rgba(184,217,141,0.15);
+  padding: 15px 60px;
+  display: flex;
+  gap: 32px;
+  align-items: center;
+}
+.nav-logo {
+  font-family: 'Shippori Mincho',serif;
+  font-size: 18px;
+  color: var(--cream);
+  margin-right: auto;
+  letter-spacing: 2px;
+}
+nav a {
+  font-family: 'Montserrat',sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: rgba(245,240,232,0.55);
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: color 0.2s;
+}
+nav a:hover { color: var(--matcha-bright); }
+
+/* ═══════════════════════════════
+   SECTION COMMON
+═══════════════════════════════ */
+.sec-wrap { max-width:100%; padding:0; }
+.sec-inner { max-width:1200px; margin:0 auto; padding:100px 60px; }
+.sec-label {
+  font-family:'Montserrat',sans-serif;
+  font-size:10px; font-weight:700;
+  letter-spacing:5px; color:var(--matcha-mid);
+  text-transform:uppercase; margin-bottom:14px;
+}
+.sec-title {
+  font-family:'Shippori Mincho',serif;
+  font-size:clamp(32px,4vw,52px);
+  line-height:1.2; color:var(--matcha-deep);
+  margin-bottom:48px;
+}
+
+/* ═══════════════════════════════
+   HISTORY TIMELINE
+═══════════════════════════════ */
+#history { background:var(--cream); }
+.timeline { position:relative; }
+.timeline::before {
+  content:'';
+  position:absolute; left:90px; top:0; bottom:0;
+  width:1px;
+  background:linear-gradient(to bottom, transparent, var(--matcha-mid), transparent);
+}
+.tl-item {
+  display:grid;
+  grid-template-columns:90px 40px 1fr;
+  gap:0 20px;
+  margin-bottom:56px;
+  align-items:start;
+  opacity:0; transform:translateX(-20px);
+  transition:all 0.6s;
+}
+.tl-item.visible { opacity:1; transform:translateX(0); }
+.tl-year {
+  font-family:'Montserrat',sans-serif;
+  font-size:12px; font-weight:700;
+  color:var(--earth); letter-spacing:1px;
+  text-align:right; padding-top:4px;
+}
+.tl-dot {
+  width:12px; height:12px;
+  background:var(--matcha-mid);
+  border-radius:50%; margin-top:6px;
+  position:relative; left:14px;
+  border:2px solid var(--cream);
+  outline:1px solid var(--matcha-mid);
+}
+.tl-body h3 { font-size:17px; font-weight:600; color:var(--matcha-deep); margin-bottom:8px; }
+.tl-body p  { font-size:14px; line-height:1.95; color:#555; }
+
+/* ── QUALITY CARD — clickable ── */
+.q-card {
+  background:#fff; padding:48px 36px;
+  position:relative; overflow:hidden; transition:transform 0.3s;
+  cursor:pointer;
+}
+.q-card:hover { transform:translateY(-4px); z-index:2; }
+.q-card::after {
+  content:''; position:absolute; bottom:0; left:0; right:0; height:3px;
+  background:var(--matcha-bright); transform:scaleX(0); transform-origin:left; transition:transform 0.4s;
+}
+.q-card:hover::after { transform:scaleX(1); }
+
+/* click hint chip */
+.q-card-hint {
+  display:inline-flex; align-items:center; gap:6px;
+  margin-top:20px;
+  padding:7px 14px;
+  background:var(--matcha-pale);
+  border:1px solid var(--matcha-light);
+  border-radius:20px;
+  font-family:'Montserrat',sans-serif;
+  font-size:10px; letter-spacing:1.5px;
+  color:var(--matcha-mid);
+  text-transform:uppercase;
+  transition:all 0.2s;
+}
+.q-card:hover .q-card-hint {
+  background:var(--matcha-deep); color:#fff; border-color:var(--matcha-deep);
+}
+
+/* ── GRADE MODAL ── */
+.grade-modal-backdrop {
+  display:none;
+  position:fixed; inset:0;
+  background:rgba(10,20,12,0.70);
+  z-index:600;
+  backdrop-filter:blur(6px);
+  align-items:flex-start; justify-content:center;
+  padding:40px 20px; overflow-y:auto;
+}
+.grade-modal-backdrop.open { display:flex; }
+
+.grade-modal {
+  background:var(--cream);
+  width:min(760px,96vw);
+  border-radius:4px;
+  position:relative;
+  animation:gradeModalIn 0.38s cubic-bezier(0.34,1.4,0.64,1) both;
+  margin:auto;
+}
+@keyframes gradeModalIn {
+  from { opacity:0; transform:scale(0.90) translateY(24px); }
+  to   { opacity:1; transform:scale(1)    translateY(0); }
+}
+
+/* header strip */
+.gm-header {
+  padding:36px 40px 28px;
+  border-bottom:1px solid var(--matcha-pale);
+  position:relative;
+}
+.gm-grade-num {
+  font-family:'Montserrat',sans-serif;
+  font-size:10px; font-weight:700; letter-spacing:5px;
+  color:var(--matcha-mid); text-transform:uppercase; margin-bottom:8px;
+}
+.gm-grade-name {
+  font-family:'Shippori Mincho',serif;
+  font-size:34px; color:var(--matcha-deep); margin-bottom:4px;
+}
+.gm-grade-en {
+  font-family:'Montserrat',sans-serif;
+  font-size:11px; letter-spacing:3px; color:#aaa; text-transform:uppercase;
+}
+.gm-close {
+  position:absolute; top:20px; right:20px;
+  background:var(--matcha-pale); border:none;
+  width:34px; height:34px; border-radius:50%;
+  font-size:16px; cursor:pointer; color:var(--matcha-deep);
+  display:flex; align-items:center; justify-content:center;
+  transition:background 0.2s;
+}
+.gm-close:hover { background:var(--matcha-light); }
+
+.gm-body { padding:32px 40px 40px; }
+
+.gm-section-title {
+  font-family:'Montserrat',sans-serif;
+  font-size:10px; font-weight:700; letter-spacing:4px;
+  color:var(--matcha-mid); text-transform:uppercase;
+  padding-bottom:10px; border-bottom:1px solid var(--matcha-pale);
+  margin-bottom:20px;
+}
+
+/* brand cards inside grade modal */
+.gm-brands { display:flex; flex-direction:column; gap:12px; margin-bottom:32px; }
+
+.gm-brand-card {
+  display:grid;
+  grid-template-columns:52px 1fr auto;
+  align-items:center; gap:18px;
+  padding:18px 20px;
+  background:#fff;
+  border:1px solid transparent;
+  border-radius:3px;
+  cursor:pointer;
+  transition:all 0.22s;
+  text-decoration:none; color:inherit;
+}
+.gm-brand-card:hover {
+  border-color:var(--matcha-light);
+  background:var(--matcha-pale);
+  transform:translateX(4px);
+}
+.gm-brand-num {
+  font-family:'Montserrat',sans-serif;
+  font-size:11px; font-weight:700; color:var(--matcha-light);
+}
+.gm-brand-name { font-size:17px; font-weight:600; color:var(--matcha-deep); }
+.gm-brand-origin {
+  font-family:'Montserrat',sans-serif;
+  font-size:9px; letter-spacing:2px;
+  color:var(--earth-light); text-transform:uppercase; margin-top:3px;
+}
+.gm-brand-specialty {
+  font-size:12px; color:#888; margin-top:5px;
+}
+.gm-brand-badge {
+  font-family:'Montserrat',sans-serif;
+  font-size:9px; font-weight:700; letter-spacing:1.5px;
+  padding:4px 10px; text-transform:uppercase; white-space:nowrap; border-radius:2px;
+}
+.gm-badge-p { background:var(--matcha-deep); color:#fff; }
+.gm-badge-m { background:var(--earth-light); color:#fff; }
+.gm-badge-e { background:var(--matcha-pale); color:var(--matcha-deep); }
+
+.gm-tip {
+  background:var(--matcha-pale);
+  border-left:3px solid var(--matcha-bright);
+  padding:16px 20px;
+  font-size:13px; line-height:1.85; color:#555;
+  border-radius:0 3px 3px 0;
+}
+.gm-tip strong { color:var(--matcha-deep); }
+.q-grade { font-family:'Montserrat',sans-serif; font-size:11px; font-weight:700; letter-spacing:3px; color:var(--matcha-mid); text-transform:uppercase; margin-bottom:14px; }
+.q-name { font-family:'Shippori Mincho',serif; font-size:26px; color:var(--matcha-deep); margin-bottom:18px; }
+.q-tag { display:inline-block; background:var(--matcha-pale); color:var(--matcha-deep); font-size:11px; padding:4px 12px; border-radius:20px; margin-bottom:18px; font-family:'Montserrat',sans-serif; }
+.q-desc { font-size:14px; line-height:1.9; color:#666; margin-bottom:22px; }
+.spec-row { display:flex; justify-content:space-between; font-size:12px; padding:8px 0; border-bottom:1px solid var(--matcha-pale); }
+.spec-label { color:#aaa; font-family:'Montserrat',sans-serif; letter-spacing:1px; }
+.spec-val { color:var(--matcha-deep); font-weight:600; }
+
+/* ═══════════════════════════════
+   VARIETIES
+═══════════════════════════════ */
+#varieties { background:var(--matcha-deep); }
+#varieties .sec-label { color:var(--matcha-light); }
+#varieties .sec-title { color:var(--cream); }
+.variety-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:20px; }
+.v-card {
+  background:rgba(255,255,255,0.05);
+  border:1px solid rgba(184,217,141,0.15);
+  padding:36px; border-radius:4px;
+  transition:all 0.3s;
+}
+.v-card:hover { background:rgba(122,182,72,0.1); border-color:rgba(184,217,141,0.4); transform:translateY(-2px); }
+.v-jp { font-family:'Shippori Mincho',serif; font-size:28px; color:var(--matcha-light); margin-bottom:4px; }
+.v-en { font-family:'Montserrat',sans-serif; font-size:10px; letter-spacing:3px; color:rgba(184,217,141,0.6); margin-bottom:14px; text-transform:uppercase; }
+.v-badges { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:14px; }
+.badge { font-size:10px; font-family:'Montserrat',sans-serif; padding:3px 10px; border-radius:20px; letter-spacing:1px; }
+.badge-g { background:rgba(122,182,72,0.2); color:var(--matcha-bright); border:1px solid rgba(122,182,72,0.3); }
+.badge-gold { background:rgba(201,168,76,0.15); color:var(--gold); border:1px solid rgba(201,168,76,0.3); }
+.v-desc { font-size:13px; line-height:1.9; color:rgba(245,240,232,0.65); }
+.v-flavor { margin-top:14px; display:flex; gap:8px; align-items:center; }
+.v-flavor span:first-child { font-family:'Montserrat',sans-serif; font-size:10px; color:rgba(184,217,141,0.5); letter-spacing:2px; text-transform:uppercase; }
+.fdots { display:flex; gap:3px; }
+.fdot { width:8px; height:8px; border-radius:50%; background:rgba(184,217,141,0.2); }
+.fdot.on { background:var(--matcha-bright); }
+
+/* ═══════════════════════════════
+   BRANDS — clickable rows
+═══════════════════════════════ */
+#brands { background:var(--cream); }
+.brand-list { display:flex; flex-direction:column; gap:2px; }
+.brand-row {
+  display:grid;
+  grid-template-columns:60px 240px 1fr auto auto;
+  align-items:center;
+  gap:20px;
+  padding:26px 32px;
+  background:#fff;
+  border:1px solid transparent;
+  transition:all 0.25s;
+  cursor:pointer;
+  position:relative;
+}
+.brand-row:hover { border-color:var(--matcha-light); background:var(--matcha-pale); transform:translateX(6px); }
+.brand-row:hover .brand-arrow { opacity:1; transform:translateX(0); }
+.brand-num { font-family:'Montserrat',sans-serif; font-size:11px; color:var(--matcha-light); font-weight:700; }
+.brand-name { font-size:18px; font-weight:600; color:var(--matcha-deep); }
+.brand-origin { font-family:'Montserrat',sans-serif; font-size:10px; letter-spacing:2px; color:var(--earth-light); text-transform:uppercase; margin-top:3px; }
+.brand-desc { font-size:13px; line-height:1.8; color:#666; }
+.brand-level {
+  font-family:'Montserrat',sans-serif; font-size:10px; font-weight:700;
+  letter-spacing:2px; padding:5px 12px; border-radius:2px; text-transform:uppercase; white-space:nowrap;
+}
+.lv-p  { background:var(--matcha-deep); color:var(--cream); }
+.lv-m  { background:var(--earth-light); color:#fff; }
+.lv-e  { background:var(--matcha-pale); color:var(--matcha-deep); }
+.brand-arrow {
+  font-size:18px; color:var(--matcha-mid);
+  opacity:0; transform:translateX(-6px); transition:all 0.25s;
+}
+
+/* ═══════════════════════════════
+   BRAND MODAL
+═══════════════════════════════ */
+.modal-backdrop {
+  display:none;
+  position:fixed; inset:0;
+  background:rgba(15,25,16,0.75);
+  z-index:500;
+  backdrop-filter:blur(4px);
+  align-items:center; justify-content:center;
+}
+.modal-backdrop.open { display:flex; }
+.modal {
+  background:var(--cream);
+  width:min(700px, 95vw);
+  max-height:88vh;
+  overflow-y:auto;
+  border-radius:4px;
+  position:relative;
+  animation:modalIn 0.35s cubic-bezier(0.34,1.56,0.64,1) both;
+}
+@keyframes modalIn {
+  from { opacity:0; transform:scale(0.92) translateY(20px); }
+  to   { opacity:1; transform:scale(1) translateY(0); }
+}
+.modal-hero {
+  height:220px;
+  background-size:cover;
+  background-position:center;
+  position:relative;
+}
+.modal-hero-overlay {
+  position:absolute; inset:0;
+  background:linear-gradient(to bottom, rgba(20,38,22,0.3) 0%, rgba(20,38,22,0.7) 100%);
+  display:flex; align-items:flex-end; padding:28px 36px;
+}
+.modal-close {
+  position:absolute; top:16px; right:20px;
+  background:rgba(20,38,22,0.6); border:none;
+  color:#fff; font-size:22px; cursor:pointer;
+  width:36px; height:36px; border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  transition:background 0.2s; z-index:2;
+}
+.modal-close:hover { background:rgba(20,38,22,0.9); }
+.modal-title-wrap { position:relative; z-index:2; }
+.modal-name { font-family:'Shippori Mincho',serif; font-size:30px; color:#fff; line-height:1.1; }
+.modal-origin-tag { font-family:'Montserrat',sans-serif; font-size:10px; letter-spacing:3px; color:var(--matcha-light); text-transform:uppercase; margin-top:6px; }
+.modal-body { padding:36px; }
+.modal-section { margin-bottom:28px; }
+.modal-section h4 {
+  font-family:'Montserrat',sans-serif; font-size:10px; font-weight:700;
+  letter-spacing:4px; color:var(--matcha-mid); text-transform:uppercase;
+  margin-bottom:12px; padding-bottom:8px;
+  border-bottom:1px solid var(--matcha-pale);
+}
+.modal-section p { font-size:14px; line-height:1.95; color:#555; }
+.modal-products { display:flex; flex-wrap:wrap; gap:8px; }
+.modal-product {
+  background:var(--matcha-pale); color:var(--matcha-deep);
+  padding:6px 14px; border-radius:3px;
+  font-size:12px; font-family:'Montserrat',sans-serif; letter-spacing:1px;
+}
+.modal-meta { display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--matcha-pale); border:1px solid var(--matcha-pale); margin-top:8px; }
+.meta-cell { background:#fff; padding:14px 18px; }
+.meta-key { font-family:'Montserrat',sans-serif; font-size:10px; letter-spacing:2px; color:#aaa; text-transform:uppercase; margin-bottom:4px; }
+.meta-val { font-size:14px; color:var(--matcha-deep); font-weight:600; }
+.modal-visit-btn {
+  display:inline-flex; align-items:center; gap:8px;
+  background:var(--matcha-deep); color:var(--cream);
+  padding:12px 24px; border:none; border-radius:3px;
+  font-family:'Montserrat',sans-serif; font-size:11px; font-weight:700;
+  letter-spacing:2px; text-transform:uppercase; text-decoration:none;
+  transition:background 0.2s; cursor:pointer; margin-top:4px;
+}
+.modal-visit-btn:hover { background:var(--matcha-mid); }
+
+/* ═══════════════════════════════
+   CHADO — 茶道
+═══════════════════════════════ */
+#chado { background:linear-gradient(160deg, #1e3320 0%, #2d4a2f 100%); }
+#chado .sec-label { color:var(--matcha-light); }
+#chado .sec-title { color:var(--cream); }
+.chado-grid { display:grid; grid-template-columns:1fr 1fr; gap:48px; align-items:start; }
+.chado-philosophy { color:rgba(245,240,232,0.75); }
+.chado-philosophy p { font-size:14px; line-height:2.2; margin-bottom:20px; }
+.chado-quote {
+  border-left:3px solid var(--matcha-bright);
+  padding:20px 24px; margin:28px 0;
+  background:rgba(122,182,72,0.06);
+}
+.chado-quote blockquote { font-family:'Shippori Mincho',serif; font-size:20px; color:var(--cream); line-height:1.7; }
+.chado-quote cite { font-family:'Montserrat',sans-serif; font-size:11px; letter-spacing:2px; color:var(--matcha-light); margin-top:8px; display:block; }
+.chado-right { display:flex; flex-direction:column; gap:20px; }
+.chado-card {
+  background:rgba(255,255,255,0.05);
+  border:1px solid rgba(184,217,141,0.15);
+  padding:28px; border-radius:3px;
+  transition:all 0.3s;
+}
+.chado-card:hover { background:rgba(122,182,72,0.08); border-color:rgba(184,217,141,0.35); }
+.chado-card-num { font-family:'Montserrat',sans-serif; font-size:28px; font-weight:700; color:rgba(184,217,141,0.2); line-height:1; margin-bottom:8px; }
+.chado-card-title { font-size:17px; font-weight:600; color:var(--cream); margin-bottom:10px; }
+.chado-card p { font-size:13px; line-height:1.9; color:rgba(245,240,232,0.65); }
+
+.chado-schools { display:grid; grid-template-columns:repeat(3,1fr); gap:2px; margin-top:48px; background:rgba(184,217,141,0.1); }
+.school-card { background:rgba(20,38,22,0.4); padding:32px 24px; text-align:center; transition:background 0.25s; }
+.school-card:hover { background:rgba(122,182,72,0.1); }
+.school-jp { font-family:'Shippori Mincho',serif; font-size:24px; color:var(--matcha-light); margin-bottom:6px; }
+.school-en { font-family:'Montserrat',sans-serif; font-size:10px; letter-spacing:3px; color:rgba(184,217,141,0.5); text-transform:uppercase; margin-bottom:14px; }
+.school-desc { font-size:13px; line-height:1.8; color:rgba(245,240,232,0.6); }
+
+.chado-utensils { display:grid; grid-template-columns:repeat(2,1fr); gap:2px; margin-top:48px; background:rgba(184,217,141,0.1); }
+.utensil-card { background:rgba(20,38,22,0.3); padding:24px 28px; transition:background 0.25s; }
+.utensil-card:hover { background:rgba(122,182,72,0.08); }
+.utensil-name { font-family:'Shippori Mincho',serif; font-size:18px; color:var(--cream); margin-bottom:4px; }
+.utensil-romaji { font-family:'Montserrat',sans-serif; font-size:10px; letter-spacing:2px; color:var(--matcha-light); text-transform:uppercase; margin-bottom:10px; }
+.utensil-desc { font-size:13px; line-height:1.8; color:rgba(245,240,232,0.6); }
+
+.chado-seasons { display:grid; grid-template-columns:repeat(4,1fr); gap:2px; margin-top:48px; background:rgba(184,217,141,0.1); }
+.season-card { background:rgba(20,38,22,0.3); padding:28px 20px; text-align:center; transition:background 0.25s; }
+.season-card:hover { background:rgba(122,182,72,0.08); }
+.season-kanji { font-family:'Shippori Mincho',serif; font-size:36px; color:rgba(184,217,141,0.4); margin-bottom:8px; }
+.season-name { font-size:16px; font-weight:600; color:var(--cream); margin-bottom:10px; }
+.season-desc { font-size:12px; line-height:1.8; color:rgba(245,240,232,0.55); }
+
+/* ═══════════════════════════════
+   BREWING
+═══════════════════════════════ */
+#brewing { background:#f0ede6; }
+.brew-steps { display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--earth-light); border:1px solid var(--earth-light); }
+.brew-step { background:var(--cream); padding:40px 28px; }
+.brew-num { font-family:'Montserrat',sans-serif; font-size:48px; font-weight:700; color:var(--matcha-pale); line-height:1; margin-bottom:16px; }
+.brew-step h3 { font-size:16px; font-weight:600; color:var(--matcha-deep); margin-bottom:12px; }
+.brew-step p { font-size:13px; line-height:1.8; color:#666; }
+.brew-extras { margin-top:32px; background:#fff; padding:36px; display:grid; grid-template-columns:1fr 1fr; gap:32px; }
+.brew-extras h3 { color:var(--matcha-deep); margin-bottom:14px; font-size:15px; }
+.brew-extras li { list-style:none; font-size:13px; line-height:2.2; color:#666; }
+
+/* ═══════════════════════════════
+   MARKET CHALLENGES
+═══════════════════════════════ */
+.ch-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+  margin-bottom: 60px;
+}
+
+.ch-card {
+  background: #fff;
+  padding: 40px 32px;
+  position: relative;
+  border-top: 3px solid transparent;
+  transition: transform 0.25s, box-shadow 0.25s;
+}
+.ch-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.08);
+  z-index: 2;
+}
+.ch-card--red    { border-top-color: #c0392b; }
+.ch-card--orange { border-top-color: #e67e22; }
+.ch-card--yellow { border-top-color: #f39c12; }
+.ch-card--blue   { border-top-color: #2980b9; }
+.ch-card--purple { border-top-color: #8e44ad; }
+.ch-card--green  { border-top-color: #27ae60; }
+
+.ch-icon {
+  font-size: 28px;
+  margin-bottom: 8px;
+  display: block;
+}
+.ch-num {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 9px; font-weight: 700;
+  letter-spacing: 4px; color: #ccc;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+.ch-title {
+  font-family: 'Noto Serif TC', serif;
+  font-size: 17px; font-weight: 600;
+  color: var(--matcha-deep);
+  margin-bottom: 14px;
+  line-height: 1.4;
+}
+.ch-body {
+  font-size: 13px; line-height: 1.95;
+  color: #555;
+  margin-bottom: 24px;
+}
+.ch-stat-row {
+  display: flex; gap: 16px;
+  padding-top: 20px;
+  border-top: 1px solid var(--matcha-pale);
+}
+.ch-stat { flex: 1; }
+.ch-stat-num {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 24px; font-weight: 700;
+  color: var(--matcha-deep);
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.ch-stat-num span {
+  font-size: 13px; font-weight: 400;
+  color: var(--matcha-mid);
+}
+.ch-stat-label {
+  font-size: 10px; color: #aaa;
+  line-height: 1.5;
+}
+
+/* Response grid */
+.ch-response {
+  background: var(--matcha-deep);
+  padding: 48px;
+  margin-top: 4px;
+}
+.ch-response .sec-label { color: var(--matcha-light); }
+
+.ch-response-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 32px;
+  margin-top: 8px;
+}
+.ch-res-item {}
+.ch-res-icon {
+  font-size: 24px;
+  display: block;
+  margin-bottom: 12px;
+}
+.ch-res-item h4 {
+  font-size: 14px; font-weight: 600;
+  color: var(--cream);
+  margin-bottom: 10px;
+  line-height: 1.4;
+}
+.ch-res-item p {
+  font-size: 12px; line-height: 1.85;
+  color: rgba(245,240,232,0.62);
+}
+
+@media(max-width:900px) {
+  .ch-grid { grid-template-columns: 1fr; }
+  .ch-response-grid { grid-template-columns: 1fr 1fr; }
+}
+
+
+footer { background:var(--matcha-deep); padding:60px; display:flex; justify-content:space-between; align-items:center; }
+.footer-logo { font-family:'Shippori Mincho',serif; font-size:28px; color:var(--cream); }
+.footer-sub { font-family:'Montserrat',sans-serif; font-size:10px; letter-spacing:3px; color:var(--matcha-light); text-transform:uppercase; margin-top:4px; }
+.footer-copy { font-family:'Montserrat',sans-serif; font-size:11px; color:rgba(245,240,232,0.35); }
+
+/* ═══════════════════════════════
+   ANIMATIONS
+═══════════════════════════════ */
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(22px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity:0; } to { opacity:1; }
+}
+
+/* ═══════════════════════════════
+   RESPONSIVE
+═══════════════════════════════ */
+@media(max-width:900px) {
+  .hero-content { padding:0 36px; }
+  .sec-inner { padding:70px 30px; }
+  nav { padding:14px 24px; gap:16px; }
+  .quality-grid,.chado-grid { grid-template-columns:1fr; }
+  .variety-grid { grid-template-columns:1fr; }
+  .brew-steps { grid-template-columns:1fr 1fr; }
+  .chado-schools { grid-template-columns:1fr; }
+  .chado-seasons { grid-template-columns:1fr 1fr; }
+  .chado-utensils { grid-template-columns:1fr; }
+  .brand-row { grid-template-columns:40px 1fr auto; }
+  .brand-desc { display:none; }
+  footer { flex-direction:column; gap:20px; text-align:center; padding:40px 24px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ HERO ═══ -->
+<div class="hero">
+  <!-- SVG Tea Garden Scene -->
+  <div class="hero-bg">
+    <svg width="1200" height="620" viewBox="0 0 1200 620" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;display:block">
+      <defs>
+        <linearGradient id="gSky" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#8fbe96"/>
+          <stop offset="40%" stop-color="#b2d4a0"/>
+          <stop offset="100%" stop-color="#c8e4a8"/>
+        </linearGradient>
+        <linearGradient id="gHill1" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#3d6e42"/>
+          <stop offset="100%" stop-color="#2a4e2e"/>
+        </linearGradient>
+        <linearGradient id="gHill2" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#4d8e55"/>
+          <stop offset="100%" stop-color="#2d5832"/>
+        </linearGradient>
+        <linearGradient id="gFg" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#5aaa5e"/>
+          <stop offset="100%" stop-color="#1e3c22"/>
+        </linearGradient>
+        <radialGradient id="gVig" cx="50%" cy="50%" r="70%">
+          <stop offset="0%" stop-color="rgba(0,0,0,0)"/>
+          <stop offset="100%" stop-color="rgba(5,18,8,0.72)"/>
+        </radialGradient>
+        <radialGradient id="gDawn" cx="0%" cy="0%" r="55%">
+          <stop offset="0%" stop-color="rgba(255,245,180,0.38)"/>
+          <stop offset="60%" stop-color="rgba(255,230,120,0.10)"/>
+          <stop offset="100%" stop-color="rgba(255,230,120,0)"/>
+        </radialGradient>
+        <radialGradient id="gMist1" cx="50%" cy="100%" r="60%">
+          <stop offset="0%" stop-color="rgba(220,238,210,0.72)"/>
+          <stop offset="100%" stop-color="rgba(220,238,210,0)"/>
+        </radialGradient>
+        <radialGradient id="gMist2" cx="50%" cy="100%" r="60%">
+          <stop offset="0%" stop-color="rgba(210,232,200,0.55)"/>
+          <stop offset="100%" stop-color="rgba(210,232,200,0)"/>
+        </radialGradient>
+      </defs>
+      <rect width="1200" height="620" fill="url(#gSky)"/>
+      <ellipse cx="80" cy="80" rx="420" ry="260" fill="url(#gDawn)"/>
+      <path d="M-10 330 Q80 220 180 270 Q260 190 360 250 Q440 180 520 240 Q600 170 680 230 Q760 175 840 228 Q920 168 1000 225 Q1080 172 1160 218 Q1220 195 1260 220 L1260 400 L-10 400 Z" fill="#5a8e60" opacity="0.38"/>
+      <path d="M-10 355 Q100 248 200 295 Q300 215 410 270 Q500 202 610 258 Q700 198 800 252 Q900 195 1000 248 Q1100 200 1200 245 Q1260 228 1280 240 L1280 420 L-10 420 Z" fill="#4a7e50" opacity="0.32"/>
+      <ellipse cx="600" cy="310" rx="700" ry="90" fill="url(#gMist1)" opacity="0.9"/>
+      <ellipse cx="600" cy="340" rx="750" ry="80" fill="url(#gMist2)" opacity="0.7"/>
+      <path d="M0 298 Q300 285 600 295 Q900 285 1200 292" stroke="rgba(230,248,220,0.35)" stroke-width="18" fill="none"/>
+      <path d="M0 316 Q400 306 700 312 Q950 306 1200 310" stroke="rgba(230,248,220,0.28)" stroke-width="12" fill="none"/>
+      <path d="M-10 360 Q150 290 310 330 Q470 268 630 308 Q790 258 950 296 Q1100 265 1260 285 L1260 490 L-10 490 Z" fill="url(#gHill1)" opacity="0.88"/>
+      <path d="M-10 375 Q295 350 600 373 Q905 348 1210 371" stroke="#1a3420" stroke-width="4.5" fill="none" opacity="0.5"/>
+      <path d="M-10 390 Q295 365 600 388 Q905 363 1210 386" stroke="#1a3420" stroke-width="4.5" fill="none" opacity="0.5"/>
+      <path d="M-10 405 Q295 380 600 403 Q905 378 1210 401" stroke="#1a3420" stroke-width="4.5" fill="none" opacity="0.5"/>
+      <path d="M-10 420 Q295 395 600 418 Q905 393 1210 416" stroke="#1a3420" stroke-width="4.5" fill="none" opacity="0.5"/>
+      <path d="M-10 435 Q295 410 600 433 Q905 408 1210 431" stroke="#1a3420" stroke-width="4.5" fill="none" opacity="0.5"/>
+      <path d="M-10 450 Q295 425 600 448 Q905 423 1210 446" stroke="#1a3420" stroke-width="4.5" fill="none" opacity="0.5"/>
+      <path d="M-10 372 Q295 347 600 370 Q905 345 1210 368" stroke="#74c47a" stroke-width="1.8" fill="none" opacity="0.22"/>
+      <path d="M-10 387 Q295 362 600 385 Q905 360 1210 383" stroke="#74c47a" stroke-width="1.8" fill="none" opacity="0.22"/>
+      <path d="M-10 402 Q295 377 600 400 Q905 375 1210 398" stroke="#74c47a" stroke-width="1.8" fill="none" opacity="0.22"/>
+      <path d="M-10 417 Q295 392 600 415 Q905 390 1210 413" stroke="#74c47a" stroke-width="1.8" fill="none" opacity="0.22"/>
+      <path d="M-10 432 Q295 407 600 430 Q905 405 1210 428" stroke="#74c47a" stroke-width="1.8" fill="none" opacity="0.22"/>
+      <path d="M-10 430 Q140 360 300 400 Q460 332 620 374 Q780 316 940 356 Q1080 325 1210 346 L1210 560 L-10 560 Z" fill="url(#gHill2)" opacity="0.94"/>
+      <path d="M-10 452 Q295 422 600 449 Q905 420 1210 447" stroke="#142e18" stroke-width="7" fill="none" opacity="0.60"/>
+      <path d="M-10 472 Q295 442 600 469 Q905 440 1210 467" stroke="#142e18" stroke-width="7" fill="none" opacity="0.60"/>
+      <path d="M-10 492 Q295 462 600 489 Q905 460 1210 487" stroke="#142e18" stroke-width="7" fill="none" opacity="0.60"/>
+      <path d="M-10 512 Q295 482 600 509 Q905 480 1210 507" stroke="#142e18" stroke-width="7" fill="none" opacity="0.60"/>
+      <path d="M-10 533 Q295 503 600 530 Q905 501 1210 528" stroke="#142e18" stroke-width="7" fill="none" opacity="0.60"/>
+      <path d="M-10 448 Q295 418 600 445 Q905 416 1210 443" stroke="#80d882" stroke-width="2.5" fill="none" opacity="0.28"/>
+      <path d="M-10 468 Q295 438 600 465 Q905 436 1210 463" stroke="#80d882" stroke-width="2.5" fill="none" opacity="0.28"/>
+      <path d="M-10 488 Q295 458 600 485 Q905 456 1210 483" stroke="#80d882" stroke-width="2.5" fill="none" opacity="0.28"/>
+      <path d="M-10 509 Q295 479 600 506 Q905 477 1210 504" stroke="#80d882" stroke-width="2.5" fill="none" opacity="0.28"/>
+      <g opacity="0.72">
+        <rect x="880" y="388" width="96" height="52" fill="#1c2e1e" rx="1"/>
+        <path d="M866 392 L928 350 L990 392 Z" fill="#111e14"/>
+        <rect x="919" y="346" width="18" height="8" fill="#0d1810" rx="1"/>
+        <rect x="904" y="332" width="9" height="22" fill="#0d1810"/>
+        <rect x="908" y="408" width="16" height="28" fill="#0a1410" rx="1"/>
+        <rect x="884" y="398" width="14" height="11" fill="#0a1410" rx="1"/>
+        <rect x="946" y="398" width="14" height="11" fill="#0a1410" rx="1"/>
+        <rect x="858" y="408" width="36" height="32" fill="#172412" rx="1"/>
+        <path d="M850 412 L876 392 L902 412 Z" fill="#0d1810"/>
+      </g>
+      <path d="M-10 510 Q120 438 280 478 Q450 408 620 452 Q790 392 960 436 Q1090 405 1210 424 L1210 630 L-10 630 Z" fill="url(#gFg)"/>
+      <path d="M-10 535 Q295 500 600 532 Q905 498 1210 530" stroke="#0e2412" stroke-width="10.5" fill="none"/>
+      <path d="M-10 560 Q295 525 600 557 Q905 523 1210 555" stroke="#0e2412" stroke-width="10.5" fill="none"/>
+      <path d="M-10 587 Q295 552 600 584 Q905 550 1210 582" stroke="#0e2412" stroke-width="10.5" fill="none"/>
+      <path d="M-10 616 Q295 581 600 613 Q905 579 1210 611" stroke="#0e2412" stroke-width="10.5" fill="none"/>
+      <path d="M-10 646 Q295 611 600 643 Q905 609 1210 641" stroke="#0a1e0e" stroke-width="10.5" fill="none"/>
+      <path d="M-10 529 Q295 494 600 526 Q905 492 1210 524" stroke="#88e888" stroke-width="3.5" fill="none" opacity="0.32"/>
+      <path d="M-10 554 Q295 519 600 551 Q905 517 1210 549" stroke="#88e888" stroke-width="3.5" fill="none" opacity="0.32"/>
+      <path d="M-10 581 Q295 546 600 578 Q905 544 1210 576" stroke="#88e888" stroke-width="3.5" fill="none" opacity="0.32"/>
+      <path d="M-10 610 Q295 575 600 607 Q905 573 1210 605" stroke="#88e888" stroke-width="3.5" fill="none" opacity="0.32"/>
+      <g opacity="0.68">
+        <rect x="194" y="475" width="7" height="40" fill="#0e2012"/>
+        <path d="M177 476 Q198 458 218 476" fill="#0e2012"/>
+        <path d="M172 490 Q198 468 224 490" fill="#0e2012"/>
+        <path d="M168 504 Q198 480 228 504" fill="#0e2012"/>
+        <rect x="228" y="486" width="5" height="30" fill="#0e2012"/>
+        <path d="M216 488 Q230 474 244 488" fill="#0e2012"/>
+        <path d="M213 500 Q230 484 247 500" fill="#0e2012"/>
+        <path d="M210 512 Q230 494 250 512" fill="#0e2012"/>
+      </g>
+      <ellipse cx="600" cy="518" rx="680" ry="38" fill="rgba(210,238,205,0.22)" opacity="0.8"/>
+      <rect width="1200" height="620" fill="url(#gVig)"/>
+    </svg>
+  </div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">A Complete Guide to Matcha</div>
+    <div class="hero-title">抹茶</div>
+    <div class="hero-title-en">MATCHA · まっちゃ</div>
+    <div class="hero-divider"></div>
+    <p class="hero-desc">一撮翠綠的粉末，承載了千年的禪意與職人精神。從平安時代的茶禪一味，到今日全球的抹茶熱潮——讓我們一起深入了解這杯茶背後的世界。</p>
+    <div class="hero-nav">
+      <a href="#history">歷史</a>
+      <a href="#quality">品質等級</a>
+      <a href="#varieties">茶樹品種</a>
+      <a href="#brands">推薦品牌</a>
+      <a href="#chado">茶道</a>
+      <a href="#brewing">沖泡方式</a>
+      <a href="#challenges">市場困境</a>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    Scroll
+  </div>
+</div>
+
+<!-- ═══ STICKY NAV ═══ -->
+<nav>
+  <div class="nav-logo">抹茶學習指南</div>
+  <a href="#history">歷史</a>
+  <a href="#quality">品質</a>
+  <a href="#varieties">品種</a>
+  <a href="#brands">品牌</a>
+  <a href="#chado">茶道</a>
+  <a href="#brewing">沖泡</a>
+  <a href="#challenges">市場困境</a>
+</nav>
+
+<!-- ═══ HISTORY ═══ -->
+<div id="history" class="sec-wrap" style="background:var(--cream)">
+  <div class="sec-inner">
+    <div class="sec-label">01 — History</div>
+    <h2 class="sec-title">千年的歷史脈絡</h2>
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-year">805 年</div>
+        <div><div class="tl-dot"></div></div>
+        <div class="tl-body"><h3>茶種東傳日本</h3><p>日本高僧最澄與空海遣唐歸來，將茶種帶回日本。最初茶葉僅在寺院間流傳，作為提神醒腦、修行輔助之用。此時尚未有「抹茶」概念，茶以煮飲方式為主。</p></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">1191 年</div>
+        <div><div class="tl-dot"></div></div>
+        <div class="tl-body"><h3>榮西帶回「點茶」文化</h3><p>禪僧榮西從中國帶回宋代茶道與茶種，著作《喫茶養生記》，奠定抹茶在日本的地位。宋代「點茶法」（將茶粉放入碗中加水攪拌）正是現代抹茶的原型，茶文化在武士與禪宗寺院中迅速蔓延。</p></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">1200–1333</div>
+        <div><div class="tl-dot"></div></div>
+        <div class="tl-body"><h3>宇治茶園的誕生</h3><p>京都宇治地區因霧氣濃厚、晝夜溫差大，成為頂級茶葉的理想產地。鎌倉時代末期，宇治已成為全日本最重要的茶葉供應地，奠定至今七百年的頂級地位。</p></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">16 世紀</div>
+        <div><div class="tl-dot"></div></div>
+        <div class="tl-body"><h3>千利休與「侘び茶」美學</h3><p>茶道宗師千利休將茶道昇華為一種美學哲學——「侘び（wabi）」，強調簡素之美與一期一會的精神。他確立了點茶程序、茶室設計、器物美學，使抹茶茶道成為日本文化的核心符號。</p></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">19 世紀</div>
+        <div><div class="tl-dot"></div></div>
+        <div class="tl-body"><h3>覆蓋栽培的發明</h3><p>茶農發展出「遮光栽培」技術——採收前20至30天以遮光網覆蓋茶樹，減少光合作用，使茶葉積累大量茶胺酸（L-theanine），形成抹茶特有的甘醇鮮味與鮮豔翠綠色澤。</p></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">21 世紀</div>
+        <div><div class="tl-dot"></div></div>
+        <div class="tl-body"><h3>抹茶的全球化浪潮</h3><p>隨著健康飲食趨勢興起，抹茶因富含抗氧化物（EGCG）、茶胺酸與咖啡因的協同效果，在全球掀起熱潮。從星巴克抹茶拿鐵到全球甜點界的抹茶熱，日本抹茶輸出量屢創新高。</p></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ QUALITY ═══ -->
+<div id="quality" class="sec-wrap" style="background:var(--matcha-pale)">
+  <div class="sec-inner">
+    <div class="sec-label">02 — Quality Grades</div>
+    <h2 class="sec-title">品質等級全解析</h2>
+    <div class="quality-grid">
+      <div class="q-card" onclick="openGradeModal('ceremonial')">
+        <div class="q-grade">Grade 01</div>
+        <div class="q-name">儀式級<br><small style="font-size:14px;color:#aaa">Ceremonial Grade</small></div>
+        <span class="q-tag">頂級品飲</span>
+        <p class="q-desc">最高等級的抹茶，採自遮光栽培30天以上的嫩葉，以花崗岩石磨緩慢研磨。色澤呈鮮豔翠綠，入口甘醇帶明顯鮮味（umami），幾乎無苦澀。直接加水點茶最能展現風味。</p>
+        <div class="spec-row"><span class="spec-label">顏色</span><span class="spec-val">鮮豔翠綠</span></div>
+        <div class="spec-row"><span class="spec-label">苦澀度</span><span class="spec-val">極低</span></div>
+        <div class="spec-row"><span class="spec-label">茶胺酸</span><span class="spec-val">含量極高</span></div>
+        <div class="spec-row"><span class="spec-label">適用</span><span class="spec-val">薄茶・濃茶點飲</span></div>
+        <div class="spec-row"><span class="spec-label">價格參考</span><span class="spec-val">NT$1,200–3,000 / 30g</span></div>
+        <div class="q-card-hint">▸ 點擊查看推薦品牌</div>
+      </div>
+      <div class="q-card" onclick="openGradeModal('premium')">
+        <div class="q-grade">Grade 02</div>
+        <div class="q-name">高級特選<br><small style="font-size:14px;color:#aaa">Premium Grade</small></div>
+        <span class="q-tag">日常品飲</span>
+        <p class="q-desc">品質介於儀式級與料理級之間的中高階選擇。色澤翠綠，風味均衡，有一定鮮甜感，些許苦澀為其特色。適合製作抹茶拿鐵、抹茶牛奶，也可直接點飲，CP值高。</p>
+        <div class="spec-row"><span class="spec-label">顏色</span><span class="spec-val">翠綠至深綠</span></div>
+        <div class="spec-row"><span class="spec-label">苦澀度</span><span class="spec-val">低至中</span></div>
+        <div class="spec-row"><span class="spec-label">茶胺酸</span><span class="spec-val">含量中高</span></div>
+        <div class="spec-row"><span class="spec-label">適用</span><span class="spec-val">拿鐵・直飲・甜點</span></div>
+        <div class="spec-row"><span class="spec-label">價格參考</span><span class="spec-val">NT$400–1,200 / 30g</span></div>
+        <div class="q-card-hint">▸ 點擊查看推薦品牌</div>
+      </div>
+      <div class="q-card" onclick="openGradeModal('culinary')">
+        <div class="q-grade">Grade 03</div>
+        <div class="q-name">料理食用級<br><small style="font-size:14px;color:#aaa">Culinary Grade</small></div>
+        <span class="q-tag">烘焙料理</span>
+        <p class="q-desc">以較成熟的茶葉研磨而成，苦味明顯、色澤偏深。濃郁的茶香能穿透奶油與糖分，在烘焙應用中表現極佳。用於製作蛋糕、冰淇淋、麻糬等，價格平易近人。</p>
+        <div class="spec-row"><span class="spec-label">顏色</span><span class="spec-val">深綠至黃綠</span></div>
+        <div class="spec-row"><span class="spec-label">苦澀度</span><span class="spec-val">中至高</span></div>
+        <div class="spec-row"><span class="spec-label">茶胺酸</span><span class="spec-val">含量低</span></div>
+        <div class="spec-row"><span class="spec-label">適用</span><span class="spec-val">烘焙・甜點・料理</span></div>
+        <div class="spec-row"><span class="spec-label">價格參考</span><span class="spec-val">NT$150–400 / 30g</span></div>
+        <div class="q-card-hint">▸ 點擊查看推薦品牌</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ VARIETIES ═══ -->
+<div id="varieties" class="sec-wrap">
+  <div class="sec-inner">
+    <div class="sec-label" style="color:var(--matcha-light)">03 — Tea Cultivars</div>
+    <h2 class="sec-title" style="color:var(--cream)">主要茶樹品種</h2>
+    <div class="variety-grid">
+      <div class="v-card">
+        <div class="v-jp">藪北</div><div class="v-en">Yabukita</div>
+        <div class="v-badges"><span class="badge badge-g">全日本佔比 75%</span><span class="badge badge-gold">泛用品種</span></div>
+        <p class="v-desc">日本最廣泛種植的茶樹品種，抗病性強、適應力高，風味均衡，帶清爽草香，苦澀適中，適合入門抹茶產品。</p>
+        <div class="v-flavor"><span>鮮甜度</span><div class="fdots"><div class="fdot on"></div><div class="fdot on"></div><div class="fdot on"></div><div class="fdot"></div><div class="fdot"></div></div></div>
+      </div>
+      <div class="v-card">
+        <div class="v-jp">朝日</div><div class="v-en">Asahi</div>
+        <div class="v-badges"><span class="badge badge-gold">宇治傳統品種</span><span class="badge badge-gold">濃茶御用</span></div>
+        <p class="v-desc">宇治地區的傳統頂級品種，專用於最高等級的濃茶用抹茶。色澤深翠，鮮味極為突出，帶獨特甘醇深度，苦澀幾乎為零。栽培困難、產量低。</p>
+        <div class="v-flavor"><span>鮮甜度</span><div class="fdots"><div class="fdot on"></div><div class="fdot on"></div><div class="fdot on"></div><div class="fdot on"></div><div class="fdot on"></div></div></div>
+      </div>
+      <div class="v-card">
+        <div class="v-jp">さみどり</div><div class="v-en">Samidori</div>
+        <div class="v-badges"><span class="badge badge-g">翠綠代表</span></div>
+        <p class="v-desc">「早綠」之意，以豔麗翠綠色澤著稱，磨成抹茶後視覺效果極佳。香氣清雅，鮮甜感強，是儀式級與高級抹茶的常用品種。</p>
+        <div class="v-flavor"><span>鮮甜度</span><div class="fdots"><div class="fdot on"></div><div class="fdot on"></div><div class="fdot on"></div><div class="fdot on"></div><div class="fdot"></div></div></div>
+      </div>
+      <div class="v-card">
+        <div class="v-jp">奥緑</div><div class="v-en">Okumidori</div>
+        <div class="v-badges"><span class="badge badge-g">晚採品種</span></div>
+        <p class="v-desc">成熟期比藪北晚約10至15天，有更長時間積累茶胺酸與養分。風味層次豐富，帶堅果與奶油香氣，口感圓潤，常用於混調以增加複雜度。</p>
+        <div class="v-flavor"><span>鮮甜度</span><div class="fdots"><div class="fdot on"></div><div class="fdot on"></div><div class="fdot on"></div><div class="fdot"></div><div class="fdot"></div></div></div>
+      </div>
+      <div class="v-card">
+        <div class="v-jp">ごこう</div><div class="v-en">Goko</div>
+        <div class="v-badges"><span class="badge badge-gold">濃茶專用</span><span class="badge badge-gold">極稀有</span></div>
+        <p class="v-desc">宇治茶道家族世代相傳的稀有品種，幾乎專門用於最高階濃茶。風味極為複雜深邃，帶木質香與深層鮮甜，在頂級茶道師之間享有極高評價。</p>
+        <div class="v-flavor"><span>鮮甜度</span><div class="fdots"><div class="fdot on"></div><div class="fdot on"></div><div class="fdot on"></div><div class="fdot on"></div><div class="fdot on"></div></div></div>
+      </div>
+      <div class="v-card">
+        <div class="v-jp">五十鈴</div><div class="v-en">Isuzumi</div>
+        <div class="v-badges"><span class="badge badge-g">西尾品種</span></div>
+        <p class="v-desc">愛知西尾地區常見品種，風味清爽，苦澀度偏低，香氣淡雅而持久。色澤穩定呈亮綠，常用於製作薄茶及料理用途。</p>
+        <div class="v-flavor"><span>鮮甜度</span><div class="fdots"><div class="fdot on"></div><div class="fdot on"></div><div class="fdot on"></div><div class="fdot"></div><div class="fdot"></div></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ BRANDS ═══ -->
+<div id="brands" class="sec-wrap" style="background:var(--cream)">
+  <div class="sec-inner">
+    <div class="sec-label">04 — Recommended Brands</div>
+    <h2 class="sec-title">值得信賴的品牌</h2>
+    <p style="font-size:13px;color:#888;margin-bottom:32px;font-family:'Montserrat',sans-serif;letter-spacing:1px;">點擊任一品牌列可查看詳細介紹 ↓</p>
+    <div class="brand-list" id="brandList">
+
+      <div class="brand-row" onclick="openModal('marukyu')">
+        <div class="brand-num">01</div>
+        <div><div class="brand-name">丸久小山園</div><div class="brand-origin">Kyoto Uji · 1736年創立</div></div>
+        <div class="brand-desc">宇治最古老的茶商之一，花崗岩石磨低速研磨，「白折」「孤峰」「蓬萊」茶道師一致推崇。</div>
+        <div class="brand-level lv-p">頂級</div>
+        <div class="brand-arrow">›</div>
+      </div>
+
+      <div class="brand-row" onclick="openModal('tsujiri')">
+        <div class="brand-num">02</div>
+        <div><div class="brand-name">辻利兵衛本店</div><div class="brand-origin">Kyoto Uji · 1860年創立</div></div>
+        <div class="brand-desc">宇治茶歷史名家，以「朝日」品種濃茶聞名，宇治有直營體驗店，是造訪宇治必訪的老鋪。</div>
+        <div class="brand-level lv-p">頂級</div>
+        <div class="brand-arrow">›</div>
+      </div>
+
+      <div class="brand-row" onclick="openModal('yamamasa')">
+        <div class="brand-num">03</div>
+        <div><div class="brand-name">山政小山園</div><div class="brand-origin">Kyoto Uji · 1875年創立</div></div>
+        <div class="brand-desc">「雲門之昔」為茶道三千家指定用茶，產品線完整，是茶道家與愛好者的可靠選擇。</div>
+        <div class="brand-level lv-p">頂級</div>
+        <div class="brand-arrow">›</div>
+      </div>
+
+      <div class="brand-row" onclick="openModal('ippodo')">
+        <div class="brand-num">04</div>
+        <div><div class="brand-name">一保堂茶舖</div><div class="brand-origin">Kyoto · 1717年創立</div></div>
+        <div class="brand-desc">京都三百年老鋪，在紐約、巴黎均設直營店，設計感現代，是日本茶葉走向全球最具代表性的品牌。</div>
+        <div class="brand-level lv-p">頂級</div>
+        <div class="brand-arrow">›</div>
+      </div>
+
+      <div class="brand-row" onclick="openModal('saicoen')">
+        <div class="brand-num">05</div>
+        <div><div class="brand-name">西條園</div><div class="brand-origin">Aichi Nishio · 現代品牌</div></div>
+        <div class="brand-desc">愛知西尾產地代表品牌，合理價格提供穩定品質，製作甜點與拿鐵的熱門選擇。</div>
+        <div class="brand-level lv-m">中高階</div>
+        <div class="brand-arrow">›</div>
+      </div>
+
+      <div class="brand-row" onclick="openModal('encha')">
+        <div class="brand-num">06</div>
+        <div><div class="brand-name">Encha 荃茶</div><div class="brand-origin">USA · 有機宇治抹茶</div></div>
+        <div class="brand-desc">前Google工程師創立，直接與宇治農家合作，強調有機認證、高茶胺酸含量，西方健康圈廣受歡迎。</div>
+        <div class="brand-level lv-m">中高階</div>
+        <div class="brand-arrow">›</div>
+      </div>
+
+      <div class="brand-row" onclick="openModal('matchaful')">
+        <div class="brand-num">07</div>
+        <div><div class="brand-name">Matchaful</div><div class="brand-origin">USA · New York 精品</div></div>
+        <div class="brand-desc">紐約精品抹茶品牌，可追溯產地的儀式級抹茶，設計時尚，深受咖啡愛好者喜愛。</div>
+        <div class="brand-level lv-m">中高階</div>
+        <div class="brand-arrow">›</div>
+      </div>
+
+      <div class="brand-row" onclick="openModal('itoen')">
+        <div class="brand-num">08</div>
+        <div><div class="brand-name">伊藤園</div><div class="brand-origin">Japan · 大型飲料集團</div></div>
+        <div class="brand-desc">日本最大飲料集團，品質穩定偏料理用途，超市廣泛販售，價格親民，入門者的起點選擇。</div>
+        <div class="brand-level lv-e">入門</div>
+        <div class="brand-arrow">›</div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ═══ CHADO — 茶道 ═══ -->
+<div id="chado" class="sec-wrap">
+  <div class="sec-inner">
+    <div class="sec-label">05 — Chado · 茶道</div>
+    <h2 class="sec-title" style="color:var(--cream)">茶道——飲茶的哲學</h2>
+
+    <div class="chado-grid">
+      <div class="chado-philosophy">
+        <p>「茶道」（Chado / Chanoyu）是日本以沏茶、飲茶為核心的傳統藝術形式，其精神遠超越一杯茶本身。它是一種以身體力行實踐的美學哲學，涵蓋空間設計、器物選擇、禮儀動作與心靈修為。</p>
+        <p>茶道的核心精神由千利休確立，以四個漢字概括——「和、敬、清、寂」——成為茶道人代代相傳的精神核心。</p>
+        <div class="chado-quote">
+          <blockquote>「點前雖無定法，<br>須知在心不在手。」</blockquote>
+          <cite>— 千利休（Sen no Rikyu, 1522–1591）</cite>
+        </div>
+        <p>「一期一會」（ichi-go ichi-e）是茶道最重要的概念之一，意指每一次茶會都是人生中唯一的相遇，應以全心全意對待，如同此後再也不會有的緣分。這種對當下珍視的態度，深深影響了日本美學乃至整個東亞的待客精神。</p>
+        <p>茶室（茶室・Chashitsu）通常設計極為簡樸，低矮的入口「躙口」（nijiriguchi）迫使所有人低頭進入，象徵在茶室前人人平等，無論地位高低皆須謙卑。</p>
+      </div>
+      <div class="chado-right">
+        <div class="chado-card"><div class="chado-card-num">和</div><div class="chado-card-title">和諧 · Harmony</div><p>在茶室中，人與人、人與器物、人與自然皆應和諧共處。茶人選擇符合季節感的器物與花材，讓每次茶會都與時節自然呼應。</p></div>
+        <div class="chado-card"><div class="chado-card-num">敬</div><div class="chado-card-title">尊重 · Respect</div><p>對主人、來賓、器物，乃至這杯茶本身，都應懷有敬意。茶道的每一個動作都帶著對當下這一刻的尊重。</p></div>
+        <div class="chado-card"><div class="chado-card-num">清</div><div class="chado-card-title">純淨 · Purity</div><p>不僅是身體與器具的潔淨，更是心靈的清明。茶會前的清掃與準備過程本身即是修行的一部分。</p></div>
+        <div class="chado-card"><div class="chado-card-num">寂</div><div class="chado-card-title">靜謐 · Tranquility</div><p>由和、敬、清三者達到的最終境界——內心的安定與平靜。寂（jaku）也與「侘寂（wabi-sabi）」的美學深度相連。</p></div>
+      </div>
+    </div>
+
+    <!-- 三大茶道流派 -->
+    <div style="margin-top:60px">
+      <div class="sec-label" style="color:var(--matcha-light);margin-bottom:16px">三大流派 · Three Schools</div>
+      <div class="chado-schools">
+        <div class="school-card">
+          <div class="school-jp">表千家</div>
+          <div class="school-en">Omotesenke</div>
+          <p class="school-desc">千利休嫡傳，強調沉靜內斂的侘び精神。點出的薄茶不打泡沫，以簡素呈現抹茶本色，是三千家中最貼近千利休原初風格的流派。</p>
+        </div>
+        <div class="school-card">
+          <div class="school-jp">裏千家</div>
+          <div class="school-en">Urasenke</div>
+          <p class="school-desc">日本最大的茶道流派，以打出細緻綿密的泡沫著稱，在國際間推廣最為積極。台灣及海外的抹茶文化傳播，大多受裏千家影響。</p>
+        </div>
+        <div class="school-card">
+          <div class="school-jp">武者小路千家</div>
+          <div class="school-en">Mushakojisenke</div>
+          <p class="school-desc">三千家中規模最小，以精簡流暢的點前程序著稱，動作直接簡潔不繁瑣，去除多餘裝飾，呈現茶道的純粹本質。</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 茶道器具 -->
+    <div style="margin-top:60px">
+      <div class="sec-label" style="color:var(--matcha-light);margin-bottom:16px">茶道器具 · Utensils</div>
+      <div class="chado-utensils">
+        <div class="utensil-card"><div class="utensil-name">茶碗 · Chawan</div><div class="utensil-romaji">Tea Bowl</div><p class="utensil-desc">茶道最核心的器物，形制因季節而異。夏用口寬碗淺（開き茶碗）散熱，冬用口窄碗深（筒茶碗）保溫。陶瓷種類繁多，樂焼（Raku ware）最受茶道師青睞。</p></div>
+        <div class="utensil-card"><div class="utensil-name">茶筅 · Chasen</div><div class="utensil-romaji">Bamboo Whisk</div><p class="utensil-desc">以竹子雕刻而成的打茶工具，每支均由職人手工製作。依用途分為薄茶用（細齒多、約80–120本立）與濃茶用（粗齒少、約48本立）。使用後需以茶筅直架風乾，避免齒尖損傷。</p></div>
+        <div class="utensil-card"><div class="utensil-name">茶入 · Chaire</div><div class="utensil-romaji">Tea Container (Koicha)</div><p class="utensil-desc">存放濃茶用抹茶的小型陶瓷罐，附象牙或木製蓋。茶入是茶道具中最受重視的收藏品之一，歷史名物的茶入可達數億日圓，幾乎是整場茶會的主角。</p></div>
+        <div class="utensil-card"><div class="utensil-name">棗 · Natsume</div><div class="utensil-romaji">Tea Container (Usucha)</div><p class="utensil-desc">存放薄茶用抹茶的漆器容器，因形狀似棗（棗子）而得名。多以黑漆或朱漆製成，亦有金蒔繪精品。棗是薄茶點前的必備器具，是茶道初學者最常接觸的器物。</p></div>
+        <div class="utensil-card"><div class="utensil-name">茶杓 · Chashaku</div><div class="utensil-romaji">Tea Scoop</div><p class="utensil-desc">以竹子或象牙製成的計量匙，用於從茶入或棗中舀取抹茶粉。每支茶杓均有獨特的彎弧曲度，茶道宗師的親製茶杓有時附有命名書（銘）而成為傳世珍品。</p></div>
+        <div class="utensil-card"><div class="utensil-name">釜 · Kama</div><div class="utensil-romaji">Iron Kettle</div><p class="utensil-desc">燒水用的鐵製茶釜，置於爐或風爐上加熱。釜的沸騰聲（松風）是茶室中最美的音景之一，被視為自然之聲的一部分。日本各產地有不同工藝風格，以山形縣天童地區最為著名。</p></div>
+      </div>
+    </div>
+
+    <!-- 四季茶道 -->
+    <div style="margin-top:60px">
+      <div class="sec-label" style="color:var(--matcha-light);margin-bottom:16px">四季茶道 · Seasons</div>
+      <div class="chado-seasons">
+        <div class="season-card"><div class="season-kanji">春</div><div class="season-name">春季</div><p class="season-desc">櫻花與若芽的季節，茶室掛軸以春花為題，器物輕盈明亮，和菓子以鶯餅、道明寺等應景。</p></div>
+        <div class="season-card"><div class="season-kanji">夏</div><div class="season-name">夏季</div><p class="season-desc">使用口寬碗淺的開き茶碗散熱，整場茶會追求清涼感，茶室保持通風，以透明感器物應景。</p></div>
+        <div class="season-card"><div class="season-kanji">秋</div><div class="season-name">秋季</div><p class="season-desc">楓紅菊香的季節，茶道器物轉為深沉土色調，和菓子以菊形、栗子等秋味為主。</p></div>
+        <div class="season-card"><div class="season-kanji">冬</div><div class="season-name">冬季</div><p class="season-desc">口窄筒型茶碗保溫，爐（地爐）開始使用，爐開（風爐改爐）是茶道年度重要節點，象徵新的茶道年開始。</p></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ BREWING ═══ -->
+<div id="brewing" class="sec-wrap" style="background:#f0ede6">
+  <div class="sec-inner">
+    <div class="sec-label">06 — How to Brew</div>
+    <h2 class="sec-title">點茶步驟</h2>
+    <div class="brew-steps">
+      <div class="brew-step"><div class="brew-num">01</div><h3>過篩抹茶粉</h3><p>以細篩將1–2克抹茶粉篩入預熱好的茶碗，消除結塊，確保茶粉細緻均勻，有助於打出細膩泡沫。</p></div>
+      <div class="brew-step"><div class="brew-num">02</div><h3>注入熱水</h3><p>加入約60–70ml熱水，水溫控制在75–80°C（勿超過85°C），避免高溫破壞茶胺酸與葉綠素，導致苦澀與色澤黯淡。</p></div>
+      <div class="brew-step"><div class="brew-num">03</div><h3>W形攪拌</h3><p>以竹製茶筅（Chasen）快速以「W」字形攪拌，動作輕巧而快速，打出綿密的金黃色泡沫（crema），約30–40秒。</p></div>
+      <div class="brew-step"><div class="brew-num">04</div><h3>立即品飲</h3><p>點好的抹茶應立即飲用，避免靜置過久導致抹茶粉沉澱。傳統茶道會搭配甜和菓子，先嘗甜食再飲茶。</p></div>
+    </div>
+    <div class="brew-extras">
+      <div>
+        <h3>所需器具</h3>
+        <ul>
+          <li>🎋 茶筅（Chasen）——竹製，120本立以上為佳</li>
+          <li>🍵 抹茶碗（Chawan）——口徑寬大，便於攪拌</li>
+          <li>🥄 茶杓（Chashaku）——竹製，計量用</li>
+          <li>🔸 細目過篩器——確保茶粉均勻</li>
+          <li>🌡️ 溫度計或恆溫熱水壺</li>
+        </ul>
+      </div>
+      <div>
+        <h3>常見問題</h3>
+        <ul>
+          <li>❓ 泡沫打不起來 → 水溫過高或茶粉結塊</li>
+          <li>❓ 顏色偏黃 → 茶葉等級偏低或儲存不當</li>
+          <li>❓ 苦澀明顯 → 水溫過高或使用了料理級茶粉</li>
+          <li>❓ 有結塊 → 記得一定要過篩</li>
+          <li>❓ 香氣不足 → 茶粉已氧化，建議開封後冷藏保存</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ MARKET CHALLENGES ═══ -->
+<div id="challenges" class="sec-wrap" style="background:var(--cream)">
+  <div class="sec-inner">
+    <div class="sec-label">07 — Market Challenges</div>
+    <h2 class="sec-title">日本抹茶市場的現實困境</h2>
+    <p style="font-size:15px;line-height:2;color:#555;max-width:680px;margin-bottom:60px;">全球抹茶需求在過去十年間急速擴張，但對日本國內的茶農與製茶業者而言，榮景背後潛藏著數個難以忽視的結構性危機。</p>
+
+    <!-- 困境一覽 grid -->
+    <div class="ch-grid">
+
+      <div class="ch-card ch-card--red">
+        <div class="ch-icon">👴</div>
+        <div class="ch-num">01</div>
+        <h3 class="ch-title">茶農高齡化與繼承危機</h3>
+        <p class="ch-body">日本農業人口平均年齡已超過67歲，茶農尤為嚴峻。宇治、西尾等產地的茶園面積持續縮減，大量農地因無人繼承而荒廢。年輕世代對農業興趣低落，加上茶園種植門檻高、回收期漫長，使得接班問題成為整個產業最棘手的長期危機。部分老農坦言，自己可能是家族中最後一代茶農。</p>
+        <div class="ch-stat-row">
+          <div class="ch-stat"><div class="ch-stat-num">67<span>歲</span></div><div class="ch-stat-label">日本茶農平均年齡</div></div>
+          <div class="ch-stat"><div class="ch-stat-num">40<span>%↓</span></div><div class="ch-stat-label">過去20年茶農人數減少</div></div>
+        </div>
+      </div>
+
+      <div class="ch-card ch-card--orange">
+        <div class="ch-icon">🏭</div>
+        <div class="ch-num">02</div>
+        <h3 class="ch-title">中國低價抹茶的市場滲透</h3>
+        <p class="ch-body">中國抹茶產量在2010年代後呈爆炸性成長，以日本正品三分之一甚至更低的價格在全球市場競爭。許多餐廳、食品工廠與飲料品牌已大量改用中國產抹茶，消費者往往難以分辨產地差異。部分業者更以「日式抹茶風味」包裝中國原料，模糊了「日本抹茶」的品牌價值。這對以品質立足的日本產地形成了直接的定價壓力。</p>
+        <div class="ch-stat-row">
+          <div class="ch-stat"><div class="ch-stat-num">3<span>倍</span></div><div class="ch-stat-label">中國抹茶出口量10年成長</div></div>
+          <div class="ch-stat"><div class="ch-stat-num">1/3</div><div class="ch-stat-label">中國貨平均售價為日本貨的</div></div>
+        </div>
+      </div>
+
+      <div class="ch-card ch-card--yellow">
+        <div class="ch-icon">🌡️</div>
+        <div class="ch-num">03</div>
+        <h3 class="ch-title">氣候變遷衝擊產量與品質</h3>
+        <p class="ch-body">抹茶品質對溫度與降雨極為敏感。近年日本夏季高溫屢破紀錄，茶葉產季提前、採收窗口縮短，導致茶胺酸積累不足、色澤偏黃。颱風與豪雨亦頻繁對茶園造成物理損害。更長遠的問題是，傳統遮光栽培所需的適宜霧氣與晝夜溫差，正因氣候暖化而逐漸消失，宇治等歷史產地的地理優勢可能在本世紀內大幅削弱。</p>
+        <div class="ch-stat-row">
+          <div class="ch-stat"><div class="ch-stat-num">+2.1<span>°C</span></div><div class="ch-stat-label">近50年宇治年均氣溫上升</div></div>
+          <div class="ch-stat"><div class="ch-stat-num">2–3<span>週</span></div><div class="ch-stat-label">茶葉採收窗口縮短</div></div>
+        </div>
+      </div>
+
+      <div class="ch-card ch-card--blue">
+        <div class="ch-icon">📦</div>
+        <div class="ch-num">04</div>
+        <h3 class="ch-title">供給量追不上全球需求爆炸</h3>
+        <p class="ch-body">2015年後抹茶在全球社群媒體上引爆流行，需求量以每年20–30%的速度成長，遠超日本農業的擴張速度。日本抹茶從種植到石磨研磨需要數年培育期，無法快速增產。供不應求的直接後果是原料成本飆升、頂級抹茶開始出現限購或預訂制，同時也給了劣質品與仿冒品趁虛而入的空間。</p>
+        <div class="ch-stat-row">
+          <div class="ch-stat"><div class="ch-stat-num">+25<span>%/年</span></div><div class="ch-stat-label">全球抹茶市場年均成長率</div></div>
+          <div class="ch-stat"><div class="ch-stat-num">3–5<span>年</span></div><div class="ch-stat-label">新茶園培育至可採收所需時間</div></div>
+        </div>
+      </div>
+
+      <div class="ch-card ch-card--purple">
+        <div class="ch-icon">🏷️</div>
+        <div class="ch-num">05</div>
+        <h3 class="ch-title">「抹茶」定義模糊、品質認知混亂</h3>
+        <p class="ch-body">目前全球對「抹茶」一詞缺乏統一的法律定義與產地保護機制。任何國家生產的綠茶粉均可自稱「Matcha」，消費者難以辨別真偽。相較於「香檳（Champagne）」受法國嚴格地理標示保護，日本抹茶長期缺乏類似的國際認證體系。雖然日本農林水產省已推動「Uji Tea」地理標示（GI）認證，但覆蓋範圍有限，整體品牌保護仍處於起步階段。</p>
+        <div class="ch-stat-row">
+          <div class="ch-stat"><div class="ch-stat-num">30<span>國+</span></div><div class="ch-stat-label">現在生產標榜「抹茶」的國家數</div></div>
+          <div class="ch-stat"><div class="ch-stat-num">無</div><div class="ch-stat-label">國際統一「抹茶」定義標準</div></div>
+        </div>
+      </div>
+
+      <div class="ch-card ch-card--green">
+        <div class="ch-icon">💴</div>
+        <div class="ch-num">06</div>
+        <h3 class="ch-title">日圓貶值：雙面刃效應</h3>
+        <p class="ch-body">近年日圓持續走弱，一方面使日本抹茶出口價格對海外買家更具吸引力，短期內刺激出口量攀升；但另一方面，進口農業資材（肥料、農藥、能源）成本以外幣計算後大幅上漲，壓縮了茶農的實際利潤。對仰賴國內銷售的小型茶農而言，日圓貶值帶來的成本壓力遠大於出口收益，加速了小農的退場。</p>
+        <div class="ch-stat-row">
+          <div class="ch-stat"><div class="ch-stat-num">−30<span>%</span></div><div class="ch-stat-label">日圓兌美元2021→2024年貶值幅度</div></div>
+          <div class="ch-stat"><div class="ch-stat-num">↑↑</div><div class="ch-stat-label">農業進口資材成本持續攀升</div></div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- 業界因應 -->
+    <div class="ch-response">
+      <div class="sec-label" style="margin-bottom:16px">業界因應之道 · Industry Response</div>
+      <div class="ch-response-grid">
+        <div class="ch-res-item">
+          <div class="ch-res-icon">🌱</div>
+          <h4>產地認證與溯源系統</h4>
+          <p>部分品牌開始導入 QR Code 產地追溯，讓消費者掃描即可查看茶園資訊、農民姓名與採收日期，以透明度對抗仿冒品。</p>
+        </div>
+        <div class="ch-res-item">
+          <div class="ch-res-icon">🤝</div>
+          <h4>農業繼承扶植計畫</h4>
+          <p>宇治市政府與民間企業合作推動「茶農繼承支援計畫」，提供年輕農業移居者補助金與技術培訓，試圖減緩茶園荒廢速度。</p>
+        </div>
+        <div class="ch-res-item">
+          <div class="ch-res-icon">🌍</div>
+          <h4>高端定位與品牌升級</h4>
+          <p>面對中國低價競爭，宇治、西尾等產地積極走高端路線，強調石磨研磨工藝、職人傳承與茶道文化底蘊，以差異化對抗價格戰。</p>
+        </div>
+        <div class="ch-res-item">
+          <div class="ch-res-icon">🔬</div>
+          <h4>科技農業導入</h4>
+          <p>部分茶農開始試驗智慧遮光系統、土壤感測器與AI病蟲害預測，在不改變傳統工藝的前提下提升產量穩定性與品質一致性。</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══ FOOTER ═══ -->
+<footer>
+  <div>
+    <div class="footer-logo">抹茶</div>
+    <div class="footer-sub">A Complete Learning Guide</div>
+  </div>
+  <div class="footer-copy">© 2024 Matcha Learning Guide · 僅供學習參考</div>
+</footer>
+
+<!-- ═══════════════════════════════
+     GRADE BRAND MODAL
+═══════════════════════════════ -->
+<div class="grade-modal-backdrop" id="gradeModalBackdrop" onclick="closeGradeModalOutside(event)">
+  <div class="grade-modal" id="gradeModalBox">
+    <div class="gm-header">
+      <div class="gm-grade-num" id="gmGradeNum"></div>
+      <div class="gm-grade-name" id="gmGradeName"></div>
+      <div class="gm-grade-en"   id="gmGradeEn"></div>
+      <button class="gm-close" onclick="closeGradeModal()">✕</button>
+    </div>
+    <div class="gm-body">
+      <div class="gm-section-title">此等級推薦品牌</div>
+      <div class="gm-brands" id="gmBrandList"></div>
+      <div class="gm-tip" id="gmTip"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════
+     BRAND MODALS
+═══════════════════════════════ -->
+<div class="modal-backdrop" id="modalBackdrop" onclick="closeModalOutside(event)">
+  <div class="modal" id="modalBox">
+    <div class="modal-hero" id="modalHero">
+      <div class="modal-hero-overlay">
+        <div class="modal-title-wrap">
+          <div class="modal-name" id="modalName"></div>
+          <div class="modal-origin-tag" id="modalOrigin"></div>
+        </div>
+      </div>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+  </div>
+</div>
+
+<script>
+/* ─── Brand Data ─── */
+const brands = {
+  marukyu: {
+    name: '丸久小山園',
+    origin: 'Kyoto Uji · 1736年創立 · 宇治老鋪',
+    bg: 'https://images.unsplash.com/photo-1545315003-c5ad6226c272?w=800&q=80',
+    history: '1736年（元文元年）創立於京都宇治，至今已傳承近三百年。丸久小山園長期為宮廷、茶道三千家及頂級料亭供應抹茶，是宇治茶界公認的頂尖代表。第七代以後更引進石磨自動化設備，但仍堅持傳統花崗岩石磨低速研磨，確保茶葉細胞壁完整不因高溫破壞香氣。',
+    character: '以色澤「極鮮翠綠」聞名，研磨細緻度極高（粉末細度達2–4微米），泡沫綿密。風味以鮮甜（umami）為主體，苦澀幾乎為零，尾韻清長。旗艦款「孤峰」與「蓬萊」為濃茶御用，「白折」與「若草」系列是薄茶經典。',
+    products: ['孤峰（濃茶）', '蓬萊（濃茶）', '白折（薄茶）', '若草（薄茶）', '五十鈴（料理）'],
+    price: 'NT$800–3,200 / 40g',
+    grade: '儀式級 / 高級',
+    founded: '1736年（元文元年）',
+    region: '京都府宇治市',
+    specialty: '濃茶、薄茶全系列',
+    url: 'https://www.marukyu-koyamaen.co.jp/'
+  },
+  tsujiri: {
+    name: '辻利兵衛本店',
+    origin: 'Kyoto Uji · 1860年創立 · 宇治傳統茶商',
+    bg: 'https://images.unsplash.com/photo-1541696490-8974a57c6ef1?w=800&q=80',
+    history: '1860年（萬延元年）由辻利兵衛在宇治創立，是宇治茶業發展史上的重要名家。辻利家族對宇治抹茶推廣貢獻甚深，現在的「辻利兵衛本店」繼承了最初的傳統路線，與衍生品牌「辻利」（專攻現代甜點市場）有所區別，前者更專注於正統茶道用抹茶的傳承。',
+    character: '以「朝日」品種為旗艦，色澤深翠，茶湯帶有獨特的深層鮮甜與木質底韻，是宇治濃茶中最具個性的風格之一。與丸久小山園的精緻圓潤相比，辻利兵衛的風格更顯深沉厚重，是濃茶愛好者最推崇的兩大選擇之一。',
+    products: ['朝日（濃茶）', '天授（薄茶）', '初昔（薄茶）'],
+    price: 'NT$900–2,800 / 40g',
+    grade: '儀式級',
+    founded: '1860年（萬延元年）',
+    region: '京都府宇治市',
+    specialty: '朝日品種濃茶',
+    url: 'https://www.tsujiri-hehonten.com/'
+  },
+  yamamasa: {
+    name: '山政小山園',
+    origin: 'Kyoto Uji · 1875年創立 · 茶道三千家指定',
+    bg: 'https://images.unsplash.com/photo-1582794543139-8ac9cb0f7b11?w=800&q=80',
+    history: '1875年（明治8年）創立，同屬宇治老字號茶商。山政小山園長期為裏千家、表千家、武者小路千家等茶道三千家供應指定抹茶，是茶道圈最廣泛認可的品牌之一。現今以穩定的品質管控與合理的價格定位，吸引了大量茶道修習者的忠實支持。',
+    character: '風格均衡而不失個性，以「雲門之昔」為代表作，是裏千家薄茶的標準範本之一。研磨細膩，色澤翠綠穩定，鮮甜與苦澀比例和諧，是初學茶道者最常被推薦的入門高階選擇。',
+    products: ['雲門之昔（薄茶）', '碌々（薄茶）', '白雲（薄茶）', '若芽（料理）'],
+    price: 'NT$600–2,200 / 40g',
+    grade: '儀式級 / 高級',
+    founded: '1875年（明治8年）',
+    region: '京都府宇治市',
+    specialty: '茶道三千家指定用茶',
+    url: 'https://www.yamamasa-koyamaen.co.jp/'
+  },
+  ippodo: {
+    name: '一保堂茶舖',
+    origin: 'Kyoto · 1717年創立 · 日本最具國際知名度茶商',
+    bg: 'https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=800&q=80',
+    history: '1717年（享保2年）創立於京都，至今已超過三百年。一保堂以玉露、煎茶起家，後逐漸建立起完整的抹茶產品線。進入21世紀後，一保堂積極向海外拓展，在紐約曼哈頓、巴黎Le Marais等地設立直營店，成為將日本茶文化推廣至全球最成功的品牌之一。',
+    character: '品牌設計融合傳統與現代美學，包裝精美，深受送禮客群喜愛。抹茶風格清雅，帶有一保堂獨特的「清涼感」，香氣細膩持久。產品線涵蓋多個抹茶等級，從薄茶日常用到濃茶禮盒均有，是最容易在台灣代購或官網購入的日本老鋪之一。',
+    products: ['雲門（薄茶）', '初昔（薄茶）', '松花（薄茶）', '幾之白（濃茶）'],
+    price: 'NT$700–2,500 / 40g',
+    grade: '儀式級 / 高級',
+    founded: '1717年（享保2年）',
+    region: '京都府京都市',
+    specialty: '國際推廣・送禮首選',
+    url: 'https://www.ippodo-tea.co.jp/'
+  },
+  saicoen: {
+    name: '西條園（Saicoen）',
+    origin: 'Aichi Nishio · 西尾市產地品牌',
+    bg: 'https://images.unsplash.com/photo-1564890369478-c89ca6d9cde9?w=800&q=80',
+    history: '西條園是愛知縣西尾市的代表性抹茶品牌。西尾市擁有「愛知の宇治」之稱，其黏土質土壤與三河灣的海洋性氣候造就了色澤飽滿、甘甜適中的抹茶特色。西條園直接從西尾農家採購茶葉，主打產地直送與合理定價，是台灣茶友在電商平台最常選購的日本中高階抹茶之一。',
+    character: '色澤明亮翠綠，香氣清爽自然，苦澀度偏低，鮮甜感中等。風格親切易飲，不論直飲或製作甜點均表現穩定。在各大評測中常以「CP值最高的日本抹茶」獲得推薦，特別適合每日飲用的抹茶拿鐵或家庭烘焙。',
+    products: ['西尾特上抹茶（薄茶）', '西尾抹茶特級（料理）', '禮盒裝系列'],
+    price: 'NT$300–800 / 30g',
+    grade: '高級 / 料理級',
+    founded: '現代品牌',
+    region: '愛知縣西尾市',
+    specialty: 'CP值・日常使用',
+    url: 'https://saicoen.co.jp/'
+  },
+  encha: {
+    name: 'Encha 荃茶',
+    origin: 'USA · 宇治有機抹茶直送',
+    bg: 'https://images.unsplash.com/photo-1615485290382-441e4d049cb5?w=800&q=80',
+    history: 'Encha由前Google機器學習工程師Li Gong於美國創立，因對抹茶品質的執著，親赴宇治與有機茶農建立直接合作關係，主打「農場直送餐桌」（farm-to-cup）的透明供應鏈。獲得美國有機認證（USDA Organic）與日本有機JAS認證，在美國健康飲食圈與瑜伽社群中打開高知名度。',
+    character: '色澤翠綠鮮豔，茶胺酸含量經過第三方實驗室檢測認證，香氣清新自然。儀式級款（Ceremonial Grade）適合直飲點茶，Latte Grade適合加奶。在美國亞馬遜評論中長期保持高評分，是最受國際健身愛好者信賴的有機抹茶品牌之一。',
+    products: ['Ceremonial Grade（儀式級）', 'Latte Grade（拿鐵用）', 'Organic Matcha Bundle'],
+    price: 'USD$25–65 / 30g（約NT$800–2,000）',
+    grade: '儀式級 / 高級',
+    founded: '2014年',
+    region: '美國加州 · 宇治茶源',
+    specialty: '有機認證・高茶胺酸',
+    url: 'https://enchatea.com/'
+  },
+  matchaful: {
+    name: 'Matchaful',
+    origin: 'New York · 精品抹茶品牌',
+    bg: 'https://images.unsplash.com/photo-1612540139150-0b9b56731d7b?w=800&q=80',
+    history: 'Matchaful是紐約精品抹茶品牌的代表，與日本各地的小農直接合作，強調完整的產地追溯系統與可持續農業。其品牌美學融合日本禪意與紐約設計感，廣受當地咖啡師（barista）與精品飲食圈歡迎，是「第三波咖啡浪潮」（Third Wave Coffee）同等概念下「精品抹茶」運動的代表品牌。',
+    character: '提供多款不同風味輪廓的抹茶，從花香型到鮮甜型均有，是全球精品抹茶市場的先驅之一。包裝設計精美，常以「matcha flight」（多款小份試飲組）方式銷售，讓消費者體驗不同風味輪廓。',
+    products: ['Ceremonial Blend', 'Everyday Matcha', 'Matcha Flight（試飲組）'],
+    price: 'USD$28–85 / 30g（約NT$900–2,700）',
+    grade: '儀式級 / 高級',
+    founded: '2016年',
+    region: '紐約市・各地農家合作',
+    specialty: '精品設計・風味多元',
+    url: 'https://matchaful.com/'
+  },
+  itoen: {
+    name: '伊藤園',
+    origin: 'Japan · 日本最大飲料集團',
+    bg: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80',
+    history: '1966年創立的伊藤園是日本最大的茶飲料集團，旗下最知名的產品是「お~いお茶」綠茶飲料。其抹茶產品線定位為大眾普及市場，在日本超市、量販店、便利商店廣泛流通。近年也積極拓展海外市場，在北美、歐洲及台灣均可見到其抹茶產品。',
+    character: '品質穩定均一，但風味偏向料理與飲品用途，以苦味較明顯、香氣直接為主要特色。不適合直接點茶品飲，但在製作抹茶冰淇淋、蛋糕、布丁、奶茶時，其濃郁的茶味反而能有效穿透奶製品，表現良好。是性價比最高的入門選擇。',
+    products: ['伊藤園 抹茶（料理用）', '抹茶粉 30g 分裝', '抹茶禮盒'],
+    price: 'NT$150–350 / 30g',
+    grade: '料理級 / 入門',
+    founded: '1966年',
+    region: '東京都 · 全國通路',
+    specialty: '超市通路・入門選擇',
+    url: 'https://www.itoen.co.jp/'
+  }
+};
+
+function openModal(id) {
+  const b = brands[id];
+  if (!b) return;
+  document.getElementById('modalHero').style.backgroundImage = `url('${b.bg}')`;
+  document.getElementById('modalName').textContent = b.name;
+  document.getElementById('modalOrigin').textContent = b.origin;
+  document.getElementById('modalBody').innerHTML = `
+    <div class="modal-section">
+      <h4>品牌沿革</h4>
+      <p>${b.history}</p>
+    </div>
+    <div class="modal-section">
+      <h4>風味特色</h4>
+      <p>${b.character}</p>
+    </div>
+    <div class="modal-section">
+      <h4>代表產品</h4>
+      <div class="modal-products">${b.products.map(p=>`<span class="modal-product">${p}</span>`).join('')}</div>
+    </div>
+    <div class="modal-section">
+      <h4>基本資訊</h4>
+      <div class="modal-meta">
+        <div class="meta-cell"><div class="meta-key">創立年份</div><div class="meta-val">${b.founded}</div></div>
+        <div class="meta-cell"><div class="meta-key">產地／據點</div><div class="meta-val">${b.region}</div></div>
+        <div class="meta-cell"><div class="meta-key">抹茶等級</div><div class="meta-val">${b.grade}</div></div>
+        <div class="meta-cell"><div class="meta-key">價格參考</div><div class="meta-val">${b.price}</div></div>
+      </div>
+    </div>
+    <a class="modal-visit-btn" href="${b.url}" target="_blank" rel="noopener">
+      ↗ 前往官方網站
+    </a>
+  `;
+  document.getElementById('modalBackdrop').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  document.getElementById('modalBackdrop').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function closeModalOutside(e) {
+  if (e.target === document.getElementById('modalBackdrop')) closeModal();
+}
+
+/* ─── Grade → Brand Mapping ─── */
+const gradeData = {
+  ceremonial: {
+    num: 'Grade 01',
+    name: '儀式級',
+    en: 'Ceremonial Grade',
+    tip: '<strong>選購建議：</strong>儀式級抹茶適合直接以茶筅點茶飲用，無需任何配料。購買時請確認「石磨研磨」「宇治産」或「遮光栽培30天以上」等關鍵字，這些都是品質的重要指標。',
+    brands: [
+      { id: 'marukyu',  num: '01', name: '丸久小山園',   origin: 'Kyoto Uji · 1736年',   specialty: '旗艦款「孤峰」「蓬萊」為濃茶御用，「白折」為薄茶經典', badge: 'gm-badge-p', badgeText: '頂級' },
+      { id: 'tsujiri',  num: '02', name: '辻利兵衛本店', origin: 'Kyoto Uji · 1860年',   specialty: '朝日品種濃茶，深層鮮甜帶木質底韻，濃茶愛好者首推',   badge: 'gm-badge-p', badgeText: '頂級' },
+      { id: 'yamamasa', num: '03', name: '山政小山園',   origin: 'Kyoto Uji · 1875年',   specialty: '茶道三千家指定，「雲門之昔」為裏千家薄茶標準範本',   badge: 'gm-badge-p', badgeText: '頂級' },
+      { id: 'ippodo',   num: '04', name: '一保堂茶舖',   origin: 'Kyoto · 1717年',       specialty: '包裝精美，送禮首選，已在紐約、巴黎設直營店',         badge: 'gm-badge-p', badgeText: '頂級' },
+      { id: 'encha',    num: '05', name: 'Encha 荃茶',   origin: 'USA · 有機宇治直送',   specialty: 'USDA有機認證，茶胺酸含量高，Ceremonial Grade款直飲最佳', badge: 'gm-badge-m', badgeText: '中高階' },
+    ]
+  },
+  premium: {
+    num: 'Grade 02',
+    name: '高級特選',
+    en: 'Premium Grade',
+    tip: '<strong>選購建議：</strong>高級特選是日常品飲的最佳甜蜜點。製作抹茶拿鐵時建議選用此等級，既能感受到明顯的鮮甜茶香，又不因苦澀影響奶感平衡。每次開封後請冷藏並盡量在一個月內用完。',
+    brands: [
+      { id: 'yamamasa', num: '01', name: '山政小山園',      origin: 'Kyoto Uji · 1875年',   specialty: '「碌々」「白雲」系列均衡清雅，日常品飲絕佳選擇',     badge: 'gm-badge-p', badgeText: '頂級' },
+      { id: 'ippodo',   num: '02', name: '一保堂茶舖',      origin: 'Kyoto · 1717年',       specialty: '「雲門」「松花」薄茶系列，帶一保堂獨特清涼感',     badge: 'gm-badge-p', badgeText: '頂級' },
+      { id: 'saicoen',  num: '03', name: '西條園（Saicoen）',origin: 'Aichi Nishio',         specialty: 'CP值最高，西尾特上抹茶清爽易飲，拿鐵愛用者票選第一', badge: 'gm-badge-m', badgeText: '中高階' },
+      { id: 'encha',    num: '04', name: 'Encha 荃茶',      origin: 'USA · 有機宇治',       specialty: 'Latte Grade 專為奶飲設計，有機認證，香氣穿透力強',   badge: 'gm-badge-m', badgeText: '中高階' },
+      { id: 'matchaful',num: '05', name: 'Matchaful',       origin: 'New York · 精品',      specialty: 'Everyday Matcha 均衡易飲，紐約精品抹茶愛好者推薦',  badge: 'gm-badge-m', badgeText: '中高階' },
+    ]
+  },
+  culinary: {
+    num: 'Grade 03',
+    name: '料理食用級',
+    en: 'Culinary Grade',
+    tip: '<strong>選購建議：</strong>料理級不適合直接點茶飲用，但在烘焙中苦味能有效平衡甜度。若抹茶蛋糕顏色偏黃或香氣薄弱，通常是使用了過低等級的茶粉，建議選擇有信譽品牌的料理用款而非超市雜牌。',
+    brands: [
+      { id: 'saicoen', num: '01', name: '西條園（Saicoen）', origin: 'Aichi Nishio',   specialty: '西尾抹茶特級，色澤穩定飽滿，烘焙甜點首選', badge: 'gm-badge-m', badgeText: '中高階' },
+      { id: 'itoen',   num: '02', name: '伊藤園',            origin: 'Japan · 全國通路', specialty: '超市廣泛販售，品質穩定，性價比最高的入門料理用抹茶', badge: 'gm-badge-e', badgeText: '入門' },
+      { id: 'yamamasa',num: '03', name: '山政小山園',        origin: 'Kyoto Uji · 1875年', specialty: '「若芽」料理用系列，宇治老鋪品質保證，甜點職人指定', badge: 'gm-badge-p', badgeText: '頂級' },
+    ]
+  }
+};
+
+function openGradeModal(gradeKey) {
+  const g = gradeData[gradeKey];
+  if (!g) return;
+  document.getElementById('gmGradeNum').textContent  = g.num;
+  document.getElementById('gmGradeName').textContent = g.name;
+  document.getElementById('gmGradeEn').textContent   = g.en;
+  document.getElementById('gmTip').innerHTML         = g.tip;
+  document.getElementById('gmBrandList').innerHTML   = g.brands.map((b, i) => `
+    <div class="gm-brand-card" onclick="closeGradeModal(); setTimeout(()=>openModal('${b.id}'),80)">
+      <div class="gm-brand-num">${b.num}</div>
+      <div>
+        <div class="gm-brand-name">${b.name}</div>
+        <div class="gm-brand-origin">${b.origin}</div>
+        <div class="gm-brand-specialty">${b.specialty}</div>
+      </div>
+      <div class="gm-brand-badge ${b.badge}">${b.badgeText}</div>
+    </div>
+  `).join('');
+  document.getElementById('gradeModalBackdrop').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeGradeModal() {
+  document.getElementById('gradeModalBackdrop').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function closeGradeModalOutside(e) {
+  if (e.target === document.getElementById('gradeModalBackdrop')) closeGradeModal();
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') { closeGradeModal(); closeModal(); }
+});
+
+/* ─── Scroll animations ─── */
+const obs = new IntersectionObserver((entries) => {
+  entries.forEach((entry, i) => {
+    if (entry.isIntersecting) {
+      setTimeout(() => entry.target.classList.add('visible'), i * 100);
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.tl-item').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
