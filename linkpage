@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>@lyichen1 · 林怡辰</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&family=Noto+Serif+TC:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink:    #12100e;
+  --paper:  #f4efe8;
+  --gold:   #b8976a;
+  --gold-l: #d4b896;
+  --warm:   #e8e0d4;
+  --muted:  #8a7e72;
+  --accent: #2c4a38;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--paper);color:var(--ink);
+  font-family:'DM Sans',sans-serif;
+  min-height:100vh;overflow-x:hidden;
+}
+body::before{
+  content:'';position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  background-size:180px;pointer-events:none;z-index:0;opacity:0.6;
+}
+.wrap{max-width:480px;margin:0 auto;padding:0 24px 80px;position:relative;z-index:1;}
+
+/* ── EDIT MODE BANNER ── */
+.edit-banner{
+  position:fixed;top:0;left:0;right:0;z-index:999;
+  background:var(--accent);color:#e8f0e0;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:10px 20px;
+  font-size:12px;letter-spacing:1px;
+  transform:translateY(-100%);
+  transition:transform 0.3s ease;
+}
+.edit-banner.show{transform:translateY(0);}
+.edit-banner-left{display:flex;align-items:center;gap:8px;font-family:'DM Sans',sans-serif;}
+.edit-dot{width:7px;height:7px;border-radius:50%;background:#7ab648;animation:pulse 1.5s infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.4;}}
+.edit-btns{display:flex;gap:8px;}
+.edit-btn{
+  padding:5px 14px;border:none;cursor:pointer;
+  font-family:'DM Sans',sans-serif;font-size:11px;letter-spacing:1px;
+  border-radius:2px;transition:all 0.2s;
+}
+.btn-save{background:#7ab648;color:#fff;}
+.btn-save:hover{background:#5a9632;}
+.btn-cancel{background:rgba(255,255,255,0.15);color:#e8f0e0;}
+.btn-cancel:hover{background:rgba(255,255,255,0.25);}
+
+/* ── EDIT TOGGLE (bottom right float) ── */
+.edit-toggle{
+  position:fixed;bottom:28px;right:28px;z-index:998;
+  width:48px;height:48px;border-radius:50%;
+  background:var(--accent);color:#e8f0e0;
+  border:none;cursor:pointer;font-size:18px;
+  box-shadow:0 4px 20px rgba(44,74,56,0.3);
+  transition:all 0.25s;
+  display:flex;align-items:center;justify-content:center;
+}
+.edit-toggle:hover{transform:scale(1.08);box-shadow:0 6px 28px rgba(44,74,56,0.4);}
+.edit-toggle.active{background:#c0392b;}
+
+/* ── HERO ── */
+.hero{padding-top:72px;padding-bottom:52px;text-align:center;position:relative;}
+.hero-lines{position:absolute;top:80px;left:50%;transform:translateX(-50%);width:260px;height:260px;pointer-events:none;}
+.hero-lines circle{fill:none;stroke:var(--gold);}
+.avatar-wrap{position:relative;width:96px;height:96px;margin:0 auto 22px;}
+.avatar-ring{
+  position:absolute;inset:-6px;border-radius:50%;
+  border:1px solid var(--gold);opacity:0.7;
+  animation:rotateSlow 18s linear infinite;
+}
+.avatar-ring-2{
+  position:absolute;inset:-12px;border-radius:50%;
+  border:1px solid var(--gold-l);opacity:0.35;
+  animation:rotateSlow 28s linear infinite reverse;
+}
+@keyframes rotateSlow{to{transform:rotate(360deg);}}
+.avatar{
+  width:96px;height:96px;border-radius:50%;
+  background:linear-gradient(135deg,var(--accent) 0%,#4a7a5e 100%);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Cormorant Garamond',serif;
+  font-size:36px;color:#e8f0e0;font-weight:300;
+  position:relative;z-index:2;
+}
+.hero-handle{font-size:11px;letter-spacing:3px;color:var(--muted);text-transform:uppercase;margin-bottom:8px;}
+.hero-name{
+  font-family:'Cormorant Garamond',serif;
+  font-size:38px;font-weight:300;color:var(--ink);
+  letter-spacing:-0.5px;margin-bottom:10px;font-style:italic;
+}
+.hero-tagline{font-size:13px;line-height:1.85;color:var(--muted);max-width:280px;margin:0 auto 26px;}
+.hero-divider{width:40px;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:0 auto;}
+
+/* ── Section label ── */
+.section-lbl{
+  font-size:9px;letter-spacing:5px;color:var(--gold);
+  text-transform:uppercase;
+  margin:44px 0 16px;
+  display:flex;align-items:center;gap:12px;
+}
+.section-lbl::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,var(--gold-l),transparent);opacity:0.4;}
+
+/* ── FEATURED CARD ── */
+.featured-card{
+  display:block;text-decoration:none;color:inherit;
+  border:1px solid rgba(184,151,106,0.25);
+  background:#fff;overflow:hidden;position:relative;
+  transition:transform 0.28s cubic-bezier(0.34,1.56,0.64,1),box-shadow 0.28s,border-color 0.2s;
+}
+.featured-card:hover{
+  transform:translateY(-4px);
+  box-shadow:0 16px 48px rgba(44,74,56,0.12);
+  border-color:rgba(184,151,106,0.55);
+}
+.featured-thumb{width:100%;height:180px;overflow:hidden;position:relative;}
+.featured-thumb svg{width:100%;height:100%;display:block;}
+.featured-thumb-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(to bottom,rgba(12,30,16,0.08) 0%,rgba(12,30,16,0.52) 100%);
+}
+.featured-badge{
+  position:absolute;top:14px;left:14px;
+  font-size:8px;letter-spacing:3px;color:#e8f0e0;
+  background:rgba(44,74,56,0.85);padding:4px 10px;text-transform:uppercase;
+}
+.featured-body{padding:22px 24px 20px;}
+.featured-category{font-size:9px;letter-spacing:4px;color:var(--gold);text-transform:uppercase;margin-bottom:8px;}
+.featured-title{font-family:'Cormorant Garamond',serif;font-size:26px;color:var(--ink);line-height:1.2;margin-bottom:8px;}
+.featured-desc{font-size:12px;line-height:1.8;color:var(--muted);margin-bottom:18px;}
+.featured-meta{display:flex;gap:10px;align-items:center;}
+.feat-chip{font-size:9px;letter-spacing:2px;color:var(--accent);background:#eef4f0;padding:4px 10px;text-transform:uppercase;}
+.featured-arrow{margin-left:auto;font-size:18px;color:var(--gold);transition:transform 0.2s;}
+.featured-card:hover .featured-arrow{transform:translateX(4px);}
+
+/* ── COMING SOON cards ── */
+.cs-list{display:flex;flex-direction:column;gap:2px;}
+.cs-card{
+  display:flex;align-items:center;gap:16px;
+  padding:17px 20px;
+  border:1px dashed rgba(184,151,106,0.32);
+  background:rgba(244,239,232,0.55);
+  transition:border-color 0.2s,background 0.2s;
+  position:relative;
+}
+.cs-card.has-link{
+  border-style:solid;
+  border-color:rgba(184,151,106,0.28);
+  background:#fff;
+  cursor:pointer;text-decoration:none;color:inherit;display:flex;
+}
+.cs-card.has-link:hover{
+  border-color:rgba(184,151,106,0.55);
+  transform:translateX(4px);
+  box-shadow:0 6px 24px rgba(44,74,56,0.08);
+}
+.cs-dot{
+  width:8px;height:8px;border-radius:50%;
+  background:var(--gold-l);flex-shrink:0;
+}
+.cs-card.has-link .cs-dot{background:var(--accent);}
+.cs-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:17px;color:var(--ink);flex:1;
+}
+.cs-card:not(.has-link) .cs-title{color:var(--muted);font-style:italic;}
+.cs-badge{
+  font-size:8px;letter-spacing:2px;color:var(--muted);
+  border:1px solid var(--gold-l);padding:3px 8px;
+  text-transform:uppercase;white-space:nowrap;flex-shrink:0;
+}
+.cs-card.has-link .cs-badge{color:var(--accent);border-color:rgba(44,74,56,0.3);}
+.cs-arrow{font-size:15px;color:var(--gold-l);flex-shrink:0;transition:transform 0.2s,color 0.2s;}
+.cs-card.has-link:hover .cs-arrow{transform:translateX(3px);color:var(--gold);}
+
+/* ── FOOTER ── */
+.footer{text-align:center;margin-top:48px;font-size:10px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;opacity:0.55;}
+
+/* ── Entry animations ── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+.hero{animation:fadeUp 0.9s 0.1s both;}
+.section-lbl:nth-of-type(1){animation:fadeUp 0.7s 0.3s both;}
+.featured-card{animation:fadeUp 0.8s 0.42s both;}
+.section-lbl:nth-of-type(2){animation:fadeUp 0.7s 0.54s both;}
+.cs-list{animation:fadeUp 0.7s 0.64s both;}
+.footer{animation:fadeUp 0.6s 0.78s both;}
+
+/* ── EDIT MODE styles ── */
+body.editing .hero-name[contenteditable],
+body.editing .hero-tagline[contenteditable],
+body.editing .featured-title[contenteditable],
+body.editing .featured-desc[contenteditable],
+body.editing .featured-category[contenteditable],
+body.editing .cs-title[contenteditable]{
+  outline:none;
+  border-bottom:1.5px dashed var(--gold);
+  padding-bottom:2px;
+  cursor:text;
+  background:rgba(184,151,106,0.06);
+  border-radius:2px;
+}
+body.editing .featured-card{pointer-events:none;}
+body.editing .featured-card [contenteditable]{pointer-events:auto;}
+
+/* ── EDIT PANEL (modal for cs cards) ── */
+.edit-panel-backdrop{
+  display:none;
+  position:fixed;inset:0;background:rgba(18,16,14,0.55);
+  z-index:1000;align-items:center;justify-content:center;
+  backdrop-filter:blur(4px);
+}
+.edit-panel-backdrop.open{display:flex;}
+.edit-panel{
+  background:var(--paper);
+  width:min(420px,92vw);
+  border-radius:3px;
+  padding:32px;
+  animation:fadeUp 0.3s both;
+}
+.ep-title{font-family:'Cormorant Garamond',serif;font-size:22px;color:var(--ink);margin-bottom:20px;}
+.ep-field{margin-bottom:16px;}
+.ep-label{font-size:10px;letter-spacing:3px;color:var(--muted);text-transform:uppercase;margin-bottom:6px;display:block;}
+.ep-input{
+  width:100%;padding:10px 12px;
+  border:1px solid rgba(184,151,106,0.35);background:#fff;
+  font-family:'DM Sans',sans-serif;font-size:13px;color:var(--ink);
+  outline:none;border-radius:2px;
+  transition:border-color 0.2s;
+}
+.ep-input:focus{border-color:var(--gold);}
+.ep-btns{display:flex;gap:10px;margin-top:22px;justify-content:flex-end;}
+.ep-btn{
+  padding:8px 20px;border:none;cursor:pointer;
+  font-family:'DM Sans',sans-serif;font-size:11px;letter-spacing:1px;
+  border-radius:2px;transition:all 0.2s;
+}
+.ep-confirm{background:var(--accent);color:#e8f0e0;}
+.ep-confirm:hover{background:#1e3428;}
+.ep-delete{background:#c0392b;color:#fff;}
+.ep-delete:hover{background:#a93226;}
+.ep-close{background:var(--warm);color:var(--muted);}
+.ep-close:hover{background:var(--gold-l);color:#fff;}
+
+/* ── ADD CARD button ── */
+.add-cs-btn{
+  display:none;
+  width:100%;padding:14px;
+  border:1px dashed rgba(184,151,106,0.38);
+  background:transparent;cursor:pointer;
+  font-family:'DM Sans',sans-serif;font-size:11px;letter-spacing:2px;
+  color:var(--muted);text-transform:uppercase;
+  margin-top:2px;
+  transition:all 0.2s;border-radius:2px;
+}
+.add-cs-btn:hover{border-color:var(--gold);color:var(--gold);background:rgba(184,151,106,0.05);}
+body.editing .add-cs-btn{display:block;}
+body.editing .cs-card{cursor:pointer;}
+body.editing .cs-card::after{
+  content:'✎ 編輯';
+  position:absolute;right:14px;top:50%;transform:translateY(-50%);
+  font-size:9px;letter-spacing:2px;color:var(--gold);opacity:0;
+  transition:opacity 0.2s;text-transform:uppercase;
+}
+body.editing .cs-card:hover::after{opacity:1;}
+</style>
+</head>
+<body>
+
+<!-- Edit mode banner -->
+<div class="edit-banner" id="editBanner">
+  <div class="edit-banner-left">
+    <div class="edit-dot"></div>
+    編輯模式 — 點擊文字即可修改
+  </div>
+  <div class="edit-btns">
+    <button class="edit-btn btn-cancel" onclick="cancelEdit()">取消</button>
+    <button class="edit-btn btn-save" onclick="saveEdit()">💾 儲存</button>
+  </div>
+</div>
+
+<!-- Edit toggle -->
+<button class="edit-toggle" id="editToggle" onclick="toggleEdit()" title="編輯頁面">✎</button>
+
+<!-- Card edit panel -->
+<div class="edit-panel-backdrop" id="editPanelBackdrop">
+  <div class="edit-panel">
+    <div class="ep-title">編輯連結卡片</div>
+    <div class="ep-field">
+      <label class="ep-label">標題</label>
+      <input class="ep-input" id="epTitle" placeholder="例：咖啡學習指南">
+    </div>
+    <div class="ep-field">
+      <label class="ep-label">網址（空白 = 顯示「即將推出」）</label>
+      <input class="ep-input" id="epUrl" placeholder="https://...">
+    </div>
+    <div class="ep-field">
+      <label class="ep-label">標籤文字</label>
+      <input class="ep-input" id="epBadge" placeholder="例：Coming Soon / 新上線">
+    </div>
+    <div class="ep-btns">
+      <button class="ep-btn ep-delete" id="epDeleteBtn" onclick="deleteCard()">刪除</button>
+      <button class="ep-btn ep-close" onclick="closePanelEdit()">取消</button>
+      <button class="ep-btn ep-confirm" onclick="confirmCardEdit()">確認</button>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <!-- ── HERO ── -->
+  <div class="hero">
+    <svg class="hero-lines" viewBox="0 0 260 260" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="130" cy="130" r="120" stroke-width="0.5" opacity="0.18"/>
+      <circle cx="130" cy="130" r="95"  stroke-width="0.5" opacity="0.12"/>
+    </svg>
+    <div class="avatar-wrap">
+      <div class="avatar-ring-2"></div>
+      <div class="avatar-ring"></div>
+      <div class="avatar">林</div>
+    </div>
+    <div class="hero-handle">@lyichen1</div>
+    <div class="hero-name" id="heroName">林怡辰</div>
+    <p class="hero-tagline" id="heroTagline">用設計過的頁面<br>讓知識變得值得收藏</p>
+    <div class="hero-divider"></div>
+  </div>
+
+  <!-- ── FEATURED ── -->
+  <div class="section-lbl">精選作品</div>
+  <a class="featured-card" id="featuredCard" href="#" target="_blank">
+    <div class="featured-thumb">
+      <svg viewBox="0 0 480 180" preserveAspectRatio="xMidYMid slice"
+           xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;display:block">
+        <defs>
+          <linearGradient id="tsky" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#7aaa82"/><stop offset="100%" stop-color="#b8d898"/>
+          </linearGradient>
+          <linearGradient id="th1" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#3d6a42"/><stop offset="100%" stop-color="#2a4e2e"/>
+          </linearGradient>
+          <linearGradient id="th2" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#4e8e56"/><stop offset="100%" stop-color="#2c5832"/>
+          </linearGradient>
+          <linearGradient id="tfg" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#58aa60"/><stop offset="100%" stop-color="#1a3a1e"/>
+          </linearGradient>
+          <radialGradient id="tvig" cx="50%" cy="50%" r="70%">
+            <stop offset="0%" stop-color="rgba(0,0,0,0)"/><stop offset="100%" stop-color="rgba(4,12,6,0.55)"/>
+          </radialGradient>
+          <radialGradient id="tdawn" cx="5%" cy="10%" r="48%">
+            <stop offset="0%" stop-color="rgba(255,248,160,0.44)"/><stop offset="100%" stop-color="rgba(255,240,120,0)"/>
+          </radialGradient>
+          <radialGradient id="tmist" cx="50%" cy="100%" r="65%">
+            <stop offset="0%" stop-color="rgba(210,238,205,0.80)"/><stop offset="100%" stop-color="rgba(210,238,205,0)"/>
+          </radialGradient>
+        </defs>
+        <rect width="480" height="180" fill="url(#tsky)"/>
+        <ellipse cx="60" cy="30" rx="180" ry="100" fill="url(#tdawn)"/>
+        <path d="M0 100 Q80 68 160 84 Q240 55 320 74 Q400 52 480 66 L480 140 L0 140Z" fill="url(#th1)" opacity="0.88"/>
+        <ellipse cx="240" cy="96" rx="300" ry="36" fill="url(#tmist)" opacity="0.82"/>
+        <path d="M0 106 Q60 96 120 103 Q180 94 240 101 Q300 92 360 99 Q420 91 480 97" stroke="#142c18" stroke-width="3.5" fill="none" opacity="0.52"/>
+        <path d="M0 116 Q60 106 120 113 Q180 104 240 111 Q300 102 360 109 Q420 101 480 107" stroke="#142c18" stroke-width="3.5" fill="none" opacity="0.52"/>
+        <path d="M0 126 Q60 116 120 123 Q180 114 240 121 Q300 112 360 119 Q420 111 480 117" stroke="#142c18" stroke-width="3.5" fill="none" opacity="0.52"/>
+        <path d="M0 103 Q60 93 120 100 Q180 91 240 98 Q300 89 360 96 Q420 88 480 94" stroke="#7acc7a" stroke-width="1.5" fill="none" opacity="0.20"/>
+        <path d="M0 88 Q80 55 160 72 Q240 42 320 60 Q400 38 480 52 L480 128 L0 128Z" fill="url(#th2)" opacity="0.96"/>
+        <path d="M0 95 Q60 83 120 92 Q180 80 240 89 Q300 78 360 87 Q420 76 480 85" stroke="#0e2414" stroke-width="5" fill="none" opacity="0.58"/>
+        <path d="M0 106 Q60 94 120 103 Q180 91 240 100 Q300 89 360 98 Q420 87 480 96" stroke="#0e2414" stroke-width="5" fill="none" opacity="0.58"/>
+        <path d="M0 117 Q60 105 120 114 Q180 102 240 111 Q300 100 360 109 Q420 98 480 107" stroke="#0e2414" stroke-width="5" fill="none" opacity="0.58"/>
+        <path d="M0 92 Q60 80 120 89 Q180 77 240 86 Q300 75 360 84 Q420 73 480 82" stroke="#7ed87e" stroke-width="2" fill="none" opacity="0.22"/>
+        <path d="M0 120 Q60 108 120 117 Q180 105 240 114 Q300 103 360 112 Q420 101 480 110 L480 180 L0 180Z" fill="url(#tfg)"/>
+        <path d="M0 130 Q60 118 120 127 Q180 116 240 125 Q300 114 360 123 Q420 112 480 121" stroke="#0a1e0e" stroke-width="7" fill="none"/>
+        <path d="M0 144 Q60 132 120 141 Q180 130 240 139 Q300 128 360 137 Q420 126 480 135" stroke="#0a1e0e" stroke-width="7" fill="none"/>
+        <path d="M0 160 Q60 148 120 157 Q180 146 240 155 Q300 144 360 153 Q420 142 480 151" stroke="#0a1e0e" stroke-width="7" fill="none"/>
+        <path d="M0 127 Q60 115 120 124 Q180 113 240 122 Q300 111 360 120 Q420 109 480 118" stroke="#88e888" stroke-width="2.5" fill="none" opacity="0.28"/>
+        <path d="M0 141 Q60 129 120 138 Q180 127 240 136 Q300 125 360 134 Q420 123 480 132" stroke="#88e888" stroke-width="2.5" fill="none" opacity="0.28"/>
+        <g opacity="0.72">
+          <rect x="355" y="76" width="40" height="20" fill="#1a2c1e"/>
+          <path d="M350 78 L375 62 L400 78Z" fill="#101e14"/>
+          <rect x="362" y="82" width="7" height="12" fill="#0a1210"/>
+        </g>
+        <g opacity="0.65">
+          <rect x="84" y="84" width="4" height="20" fill="#0c2010"/>
+          <path d="M76 86 Q86 76 96 86" fill="#0c2010"/>
+          <path d="M73 94 Q86 82 99 94" fill="#0c2010"/>
+          <path d="M70 103 Q86 88 102 103" fill="#0c2010"/>
+        </g>
+        <rect width="480" height="180" fill="url(#tvig)"/>
+      </svg>
+      <div class="featured-thumb-overlay"></div>
+      <div class="featured-badge">最新作品</div>
+    </div>
+    <div class="featured-body">
+      <div class="featured-category" id="featCategory">Knowledge · 知識型</div>
+      <div class="featured-title" id="featTitle">抹茶學習指南</div>
+      <div class="featured-desc" id="featDesc">從千年歷史到品質等級、推薦品牌、茶道精神與沖泡技法——完整收錄抹茶的一切。</div>
+      <div class="featured-meta">
+        <div class="feat-chip">7 章節</div>
+        <div class="feat-chip">互動式</div>
+        <div class="featured-arrow">→</div>
+      </div>
+    </div>
+  </a>
+
+  <!-- ── COMING SOON / WORKS ── -->
+  <div class="section-lbl">更多作品</div>
+  <div class="cs-list" id="csList">
+    <!-- cards injected by JS -->
+  </div>
+  <button class="add-cs-btn" onclick="addCard()">＋ 新增作品</button>
+
+  <div class="footer">© @lyichen1 · 用設計讓知識值得收藏</div>
+</div>
+
+<script>
+/* ─── DATA ─── */
+const STORAGE_KEY = 'lyichen_data_v1';
+
+const DEFAULT = {
+  name: '林怡辰',
+  tagline: '用設計過的頁面\n讓知識變得值得收藏',
+  featUrl: '#',
+  featCategory: 'Knowledge · 知識型',
+  featTitle: '抹茶學習指南',
+  featDesc: '從千年歷史到品質等級、推薦品牌、茶道精神與沖泡技法——完整收錄抹茶的一切。',
+  cards: [
+    { title: '下一個學習指南', url: '', badge: 'Coming Soon' },
+    { title: '第三個主題', url: '', badge: 'Coming Soon' },
+  ]
+};
+
+function loadData() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    return raw ? { ...DEFAULT, ...JSON.parse(raw) } : { ...DEFAULT };
+  } catch { return { ...DEFAULT }; }
+}
+
+function saveData(d) {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(d)); } catch(e) { alert('儲存失敗：' + e.message); }
+}
+
+/* ─── RENDER ─── */
+let data = loadData();
+
+function render() {
+  document.getElementById('heroName').textContent    = data.name;
+  document.getElementById('heroTagline').innerHTML   = data.tagline.replace(/\n/g,'<br>');
+  document.getElementById('featTitle').textContent   = data.featTitle;
+  document.getElementById('featDesc').textContent    = data.featDesc;
+  document.getElementById('featCategory').textContent= data.featCategory;
+
+  const card = document.getElementById('featuredCard');
+  card.href = data.featUrl && data.featUrl !== '#' ? data.featUrl : '#';
+
+  renderCards();
+}
+
+function renderCards() {
+  const list = document.getElementById('csList');
+  list.innerHTML = '';
+  data.cards.forEach((c, i) => {
+    const isLink = c.url && c.url.trim();
+    const el = document.createElement(isLink ? 'a' : 'div');
+    el.className = 'cs-card' + (isLink ? ' has-link' : '');
+    if (isLink) { el.href = c.url; el.target = '_blank'; }
+    el.innerHTML = `
+      <div class="cs-dot"></div>
+      <div class="cs-title">${c.title || '...'}</div>
+      <div class="cs-badge">${c.badge || 'Coming Soon'}</div>
+      ${isLink ? '<div class="cs-arrow">→</div>' : ''}
+    `;
+    el.addEventListener('click', (e) => {
+      if (document.body.classList.contains('editing')) {
+        e.preventDefault(); e.stopPropagation();
+        openPanelEdit(i);
+      }
+    });
+    list.appendChild(el);
+  });
+}
+
+/* ─── EDIT MODE ─── */
+let editing = false;
+let snapshot = null;
+
+function toggleEdit() {
+  editing ? cancelEdit() : startEdit();
+}
+
+function startEdit() {
+  editing = true;
+  snapshot = JSON.stringify(data);
+  document.body.classList.add('editing');
+  document.getElementById('editBanner').classList.add('show');
+  document.getElementById('editToggle').classList.add('active');
+  document.getElementById('editToggle').textContent = '✕';
+
+  // make hero fields editable
+  makeEditable('heroName', v => data.name = v);
+  makeEditable('heroTagline', v => data.tagline = v.replace(/<br\s*\/?>/gi,'\n').replace(/&nbsp;/g,' '));
+  makeEditable('featTitle', v => data.featTitle = v);
+  makeEditable('featDesc', v => data.featDesc = v);
+  makeEditable('featCategory', v => data.featCategory = v);
+
+  // featured URL prompt on click of arrow area
+  document.getElementById('featuredCard').addEventListener('click', handleFeatClick);
+}
+
+function makeEditable(id, setter) {
+  const el = document.getElementById(id);
+  el.contentEditable = 'true';
+  el.addEventListener('input', () => setter(el.innerHTML));
+}
+
+function handleFeatClick(e) {
+  if (!editing) return;
+  e.preventDefault();
+  const url = prompt('抹茶指南的網址：', data.featUrl === '#' ? '' : data.featUrl);
+  if (url !== null) { data.featUrl = url.trim() || '#'; }
+}
+
+function saveEdit() {
+  // collect current contenteditable values
+  data.name        = document.getElementById('heroName').textContent.trim();
+  data.tagline     = document.getElementById('heroTagline').innerText.trim();
+  data.featTitle   = document.getElementById('featTitle').textContent.trim();
+  data.featDesc    = document.getElementById('featDesc').textContent.trim();
+  data.featCategory= document.getElementById('featCategory').textContent.trim();
+
+  saveData(data);
+  exitEdit();
+  render();
+
+  // brief "saved" flash
+  const b = document.getElementById('editBanner');
+  b.style.background = '#27ae60';
+  setTimeout(() => { b.style.background = ''; }, 900);
+}
+
+function cancelEdit() {
+  if (snapshot) data = JSON.parse(snapshot);
+  exitEdit();
+  render();
+}
+
+function exitEdit() {
+  editing = false;
+  document.body.classList.remove('editing');
+  document.getElementById('editBanner').classList.remove('show');
+  document.getElementById('editToggle').classList.remove('active');
+  document.getElementById('editToggle').textContent = '✎';
+
+  ['heroName','heroTagline','featTitle','featDesc','featCategory'].forEach(id => {
+    const el = document.getElementById(id);
+    el.contentEditable = 'false';
+    el.removeEventListener('input', () => {});
+  });
+  document.getElementById('featuredCard').removeEventListener('click', handleFeatClick);
+}
+
+/* ─── CARD PANEL EDIT ─── */
+let editingCardIdx = null;
+
+function openPanelEdit(idx) {
+  editingCardIdx = idx;
+  const c = idx === -1 ? { title:'', url:'', badge:'Coming Soon' } : data.cards[idx];
+  document.getElementById('epTitle').value  = c.title  || '';
+  document.getElementById('epUrl').value    = c.url    || '';
+  document.getElementById('epBadge').value  = c.badge  || 'Coming Soon';
+  document.getElementById('epDeleteBtn').style.display = idx === -1 ? 'none' : 'block';
+  document.getElementById('editPanelBackdrop').classList.add('open');
+}
+
+function closePanelEdit() {
+  document.getElementById('editPanelBackdrop').classList.remove('open');
+  editingCardIdx = null;
+}
+
+function confirmCardEdit() {
+  const c = {
+    title: document.getElementById('epTitle').value.trim() || '新作品',
+    url:   document.getElementById('epUrl').value.trim(),
+    badge: document.getElementById('epBadge').value.trim() || 'Coming Soon',
+  };
+  if (editingCardIdx === -1) {
+    data.cards.push(c);
+  } else if (editingCardIdx !== null) {
+    data.cards[editingCardIdx] = c;
+  }
+  closePanelEdit();
+  renderCards();
+}
+
+function deleteCard() {
+  if (editingCardIdx !== null && editingCardIdx >= 0) {
+    data.cards.splice(editingCardIdx, 1);
+  }
+  closePanelEdit();
+  renderCards();
+}
+
+function addCard() { openPanelEdit(-1); }
+
+// close panel on backdrop click
+document.getElementById('editPanelBackdrop').addEventListener('click', function(e) {
+  if (e.target === this) closePanelEdit();
+});
+
+// ESC to exit edit
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') { if (document.getElementById('editPanelBackdrop').classList.contains('open')) closePanelEdit(); else if (editing) cancelEdit(); }
+});
+
+// init
+render();
+</script>
+</body>
+</html>
